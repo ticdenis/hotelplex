@@ -1,0 +1,32 @@
+Hotel:
+  type: object
+  config:
+    fields:
+      uuid:
+        type: 'String!'
+      name:
+        type: 'String!'
+      address:
+        type: 'String!'
+      phone:
+        type: 'String!'
+      email:
+        type: 'String!'
+      lift:
+        type: 'Boolean!'
+      wifi:
+        type: 'Boolean!'
+      accessibility:
+        type: 'Boolean!'
+      parking:
+        type: 'Boolean!'
+      kitchen:
+        type: 'Boolean!'
+      pets:
+        type: 'Boolean!'
+      paymentMethods:
+        type: '[String!]!'
+      logo:
+        type: 'String'
+      images:
+        type: '[String!]!'

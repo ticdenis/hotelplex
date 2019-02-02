@@ -1,0 +1,13 @@
+Query:
+  type: object
+  config:
+    fields:
+      hotelInfo:
+        type: "Hotel!"
+        args:
+          uuid:
+            type: "String!"
+        resolve: "@=resolver('HotelResolver', [args])"
+      hotelsInfo:
+        type: "[Hotel!]!"
+        resolve: "@=resolver('HotelsResolver', [args])"
