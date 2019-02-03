@@ -14,6 +14,12 @@ vendor/
 /.env.local
 /.env.local.php
 /.env.*.local
+/.env.test
+/.env.test.php
+/.env.*.test
+/.env.prod
+/.env.prod.php
+/.env.*.prod
 /public/bundles/
 /var/
 /vendor/
