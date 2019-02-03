@@ -1,4 +1,14 @@
-/.idea/
+###> HotelPlex ###
+.idea/
+.vscode/
+*.sublime-workspace
+
+.DS_Store
+Thumbs.db
+
+.env
+vendor/
+###< HotelPlex ###
 
 ###> symfony/framework-bundle ###
 /.env.local

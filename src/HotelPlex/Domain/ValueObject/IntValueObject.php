@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tasky\Domain\ValueObject;
+namespace HotelPlex\Domain\ValueObject;
 
 abstract class IntValueObject extends ValueObject
 {
