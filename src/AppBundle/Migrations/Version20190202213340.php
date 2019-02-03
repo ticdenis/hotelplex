@@ -41,10 +41,6 @@ final class Version20190202213340 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        $table = $schema->getTable(self::TABLE);
-
-        $table->removeForeignKey(self::FOREIGN_KEY);
-
         $schema->dropTable(self::TABLE);
     }
 }

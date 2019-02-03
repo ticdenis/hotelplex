@@ -18,14 +18,14 @@ class HotelFixture
         $values = $presenter->write($hotel)->read();
         unset($values['paymentMethods']);
         unset($values['images']);
-        $values['created_at'] = $hotel->createdAt()->value()->getTimestamp();
-        $values['updated_at'] = $hotel->updatedAt()->value()->getTimestamp();
+        $values['created_at'] = $hotel->createdAt()->value()->format('Y-m-d H:i:s');
+        $values['updated_at'] = $hotel->updatedAt()->value()->format('Y-m-d H:i:s');
 
         $queryBuilder = $connection->createQueryBuilder()->insert('hotels');
         $index = 0;
         foreach ($values as $key => $value) {
             $queryBuilder->setValue($key, '?');
-            $queryBuilder->setParameter($index++, $value);
+            $queryBuilder->setParameter($index++, is_bool($value) ? +$value : $value);
         }
         $queryBuilder->execute();
     }

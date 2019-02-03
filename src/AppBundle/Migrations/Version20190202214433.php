@@ -11,8 +11,6 @@ use Doctrine\Migrations\AbstractMigration;
 final class Version20190202214433 extends AbstractMigration
 {
     const TABLE = 'hotel_payment_methods';
-    const HOTEL_FOREIGN_KEY = 'hotel_uuid_fk';
-    const PAYMENT_METHOD_FOREIGN_KEY = 'payment_method_id_fk';
 
     public function getDescription(): string
     {
@@ -36,26 +34,17 @@ final class Version20190202214433 extends AbstractMigration
         $table->addForeignKeyConstraint(
             Version20190202212623::TABLE,
             ['hotel_uuid'],
-            ['uuid'],
-            [],
-            self::HOTEL_FOREIGN_KEY
+            ['uuid']
         );
         $table->addForeignKeyConstraint(
             Version20190202211739::TABLE,
             ['payment_method_id'],
-            ['id'],
-            [],
-            self::PAYMENT_METHOD_FOREIGN_KEY
+            ['id']
         );
     }
 
     public function down(Schema $schema): void
     {
-        $table = $schema->getTable(self::TABLE);
-
-        $table->removeForeignKey(self::HOTEL_FOREIGN_KEY);
-        $table->removeForeignKey(self::PAYMENT_METHOD_FOREIGN_KEY);
-
         $schema->dropTable(self::TABLE);
     }
 }
