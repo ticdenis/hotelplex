@@ -14,25 +14,29 @@ use HotelPlex\Infrastructure\Presenter\ArrayHotelPresenter;
 use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerHotelFactory;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Psr\Container\ContainerInterface;
 
 class HotelsResolver implements ResolverInterface, AliasedInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * @return mixed
      */
     public function resolve()
     {
-        $repository = new class implements HotelRepository {
-            public function all(): array
-            {
-                return [FakerHotelFactory::create()];
-            }
-
-            public function ofIdOrFail(UuidValueObject $uuid): Hotel
-            {
-                return FakerHotelFactory::create();
-            }
-        };
+        $repository = $this->container->get('hotelplex.repository.hotel');
         $request = new EmptyRequest();
         $service = new HotelListService($repository);
         $presenter = new ArrayHotelListPresenter(new ArrayHotelPresenter());

@@ -6,18 +6,28 @@ namespace App\GraphQL\Resolver;
 
 use HotelPlex\Application\Service\Hotel\HotelRequest;
 use HotelPlex\Application\Service\Hotel\HotelService;
-use HotelPlex\Domain\Entity\Hotel\Hotel;
 use HotelPlex\Domain\Exception\Hotel\HotelNotFoundException;
-use HotelPlex\Domain\Repository\Hotel\HotelRepository;
-use HotelPlex\Domain\ValueObject\UuidValueObject;
 use HotelPlex\Infrastructure\Presenter\ArrayHotelPresenter;
-use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerHotelFactory;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Psr\Container\ContainerInterface;
 
 class HotelResolver implements ResolverInterface, AliasedInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * @param Argument $args
      * @return mixed
@@ -25,17 +35,7 @@ class HotelResolver implements ResolverInterface, AliasedInterface
      */
     public function resolve(Argument $args)
     {
-        $repository = new class implements HotelRepository {
-            public function all(): array
-            {
-                return [FakerHotelFactory::create()];
-            }
-
-            public function ofIdOrFail(UuidValueObject $uuid): Hotel
-            {
-                return FakerHotelFactory::create();
-            }
-        };
+        $repository = $this->container->get('hotelplex.repository.hotel');
         $request = new HotelRequest($args['uuid']);
         $service = new HotelService($repository);
         $presenter = new ArrayHotelPresenter();
