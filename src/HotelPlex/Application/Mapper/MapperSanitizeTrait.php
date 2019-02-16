@@ -18,7 +18,7 @@ trait MapperSanitizeTrait
     {
         if (is_object($source)) {
             return $source;
-        } else if ($isInvalid = !is_array($source) || empty($source)) {
+        } else if ($isInvalid = !is_array($source) && empty($source)) {
             throw InvalidSourceArgumentToSanitizeException::withSource($source);
         } else if ($isSimpleArray = !isset($source[0]) || (!is_array($source[0]) && !is_object($source[0]))) {
             return (object) $source;
