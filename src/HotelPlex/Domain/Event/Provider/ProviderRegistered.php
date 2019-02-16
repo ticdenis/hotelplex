@@ -35,7 +35,6 @@ class ProviderRegistered implements DomainEvent
      * @param string $id
      * @param string $username
      * @param string $email
-     * @param string $password
      */
     public function __construct(
         string $id,
@@ -43,7 +42,6 @@ class ProviderRegistered implements DomainEvent
         string $email
     )
     {
-
         $this->id = $id;
         $this->username = $username;
         $this->email = $email;
