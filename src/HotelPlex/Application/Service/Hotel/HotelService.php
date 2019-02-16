@@ -31,7 +31,7 @@ class HotelService implements Service
      * @return HotelPresenter
      * @throws HotelNotFoundException
      */
-    public function execute($request, $presenter): HotelPresenter
+    public function __invoke($request, $presenter): HotelPresenter
     {
         $hotel = $this->repository->ofIdOrFail($request->uuid());
 

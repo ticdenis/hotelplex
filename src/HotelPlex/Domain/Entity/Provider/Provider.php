@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace HotelPlex\Domain\Entity\Provider;
 
-use DateTime;
-use HotelPlex\Domain\Entity\User\ProviderEmail;
-use HotelPlex\Domain\Entity\User\ProviderPassword;
 use HotelPlex\Domain\Event\DomainEventPublisher;
 use HotelPlex\Domain\ValueObject\DateTimeValueObject;
 use HotelPlex\Domain\ValueObject\UuidValueObject;
@@ -14,7 +11,6 @@ use Tasky\Domain\Model\User\ProviderRegistered;
 
 final class Provider
 {
-
     /**
      * @var UuidValueObject
      */
@@ -32,10 +28,6 @@ final class Provider
      */
     private $password;
     /**
-     * @var array
-     */
-    private $hotels;
-    /**
      * @var DateTimeValueObject
      */
     private $createdAt;
@@ -49,21 +41,26 @@ final class Provider
         string $username,
         ProviderEmail $email,
         ProviderPassword $password,
-        array $hotels,
         DateTimeValueObject $createdAt = null,
         DateTimeValueObject $updatedAt = null
     )
     {
-
         $this->uuid = $uuid;
         $this->username = $username;
         $this->email = $email;
         $this->password = $password;
-        $this->hotels = $hotels;
-        $this->createdAt = $createdAt ?? new DateTime();
-        $this->updatedAt = $updatedAt ?? new DateTime();
+        $this->createdAt = $createdAt ?? DateTimeValueObject::now();
+        $this->updatedAt = $updatedAt ?? DateTimeValueObject::now();
     }
 
+    /**
+     * @param UuidValueObject $uuid
+     * @param string $username
+     * @param ProviderEmail $email
+     * @param ProviderPassword $password
+     * @param array $hotels
+     * @return Provider
+     */
     public static function register(
         UuidValueObject $uuid,
         string $username,
@@ -115,14 +112,6 @@ final class Provider
     public function password(): ProviderPassword
     {
         return $this->password;
-    }
-
-    /**
-     * @return array
-     */
-    public function hotels(): array
-    {
-        return $this->hotels;
     }
 
     /**

@@ -13,5 +13,5 @@ interface Service
      * @param Presenter $presenter
      * @return mixed
      */
-    public function execute($request, $presenter);
+    public function __invoke($request, $presenter);
 }

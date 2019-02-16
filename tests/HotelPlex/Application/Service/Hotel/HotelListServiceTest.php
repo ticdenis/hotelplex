@@ -27,7 +27,7 @@ class HotelListServiceTest extends TestCase
         /** @var HotelListPresenter $mockPresenter */
         $service = new HotelListService($mockRepository);
         // Action
-        $mockPresenter = $service->execute(new EmptyRequest(), $mockPresenter);
+        $mockPresenter = $service->__invoke(new EmptyRequest(), $mockPresenter);
         $hotels = $mockPresenter->read();
         // Assert
         $this->assertNotEmpty($hotels);

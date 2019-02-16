@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HotelPlex\Domain\Entity\User;
 
-use DateTime;
 use HotelPlex\Domain\ValueObject\DateTimeValueObject;
 use HotelPlex\Domain\ValueObject\UuidValueObject;
 use Webmozart\Assert\Assert;
@@ -22,12 +21,12 @@ final class User
     private $username;
 
     /**
-     * @var string
+     * @var UserEmail
      */
     private $email;
 
     /**
-     * @var string
+     * @var UserPassword
      */
     private $password;
 
@@ -47,7 +46,6 @@ final class User
     private $updatedAt;
 
     /**
-     * User constructor.
      * @param UuidValueObject $uuid
      * @param string $username
      * @param UserEmail $email
@@ -72,8 +70,8 @@ final class User
         $this->email = $email;
         $this->password = $password;
         $this->setHotels($hotels);
-        $this->createdAt = $createdAt ?? new DateTime();
-        $this->updatedAt = $updatedAt ?? new DateTime();
+        $this->createdAt = $createdAt ?? DateTimeValueObject::now();
+        $this->updatedAt = $updatedAt ?? DateTimeValueObject::now();
     }
 
     /**
@@ -113,17 +111,17 @@ final class User
     }
 
     /**
-     * @return string
+     * @return UserEmail
      */
-    public function email(): string
+    public function email(): UserEmail
     {
         return $this->email;
     }
 
     /**
-     * @return string
+     * @return UserPassword
      */
-    public function password(): string
+    public function password(): UserPassword
     {
         return $this->password;
     }

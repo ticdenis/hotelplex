@@ -29,7 +29,7 @@ class HotelListService implements Service
      * @param HotelListPresenter $presenter
      * @return HotelListPresenter
      */
-    public function execute($request, $presenter): HotelListPresenter
+    public function __invoke($request, $presenter): HotelListPresenter
     {
         $hotels = $this->repository->all();
 
