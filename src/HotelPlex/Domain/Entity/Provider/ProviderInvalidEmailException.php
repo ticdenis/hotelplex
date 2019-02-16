@@ -1,0 +1,22 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tasky\Domain\Model\User;
+
+use HotelPlex\Domain\Exception\DomainException;
+
+class ProviderInvalidEmailException extends DomainException
+{
+    /**
+     * @param string $email
+     * @return ProviderInvalidEmailException
+     */
+    public static function withEmail(string $email): self
+    {
+        return new self(sprintf(
+            'Provider email is invalid with "%s".',
+            $email
+        ));
+    }
+}
