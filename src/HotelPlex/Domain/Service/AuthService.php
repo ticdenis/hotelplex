@@ -23,20 +23,11 @@ final class AuthService
      */
     public function __construct($repository)
     {
-        $this->guardRepository($repository);
+        if ($repository === null || !($repository instanceof UserRepository || $repository instanceof ProviderRepository)) {
+            throw AuthException::invalidRepository($repository ? get_class($repository) : 'null');
+        }
 
         $this->repository = $repository;
-    }
-
-    /**
-     * @param $repository
-     * @throws AuthException
-     */
-    private function guardRepository($repository)
-    {
-        if (!($repository instanceof UserRepository || $repository instanceof ProviderRepository)) {
-            throw AuthException::invalidRepository(get_class($repository));
-        }
     }
 
     /**

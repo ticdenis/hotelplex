@@ -61,7 +61,7 @@ class HotelServiceTest extends TestCase
     /**
      * @test
      */
-    public function shouldHotelNotFoundException()
+    public function shouldThrowAHotelNotFoundException()
     {
         // Arrange
         $this->mockRepository->method('ofIdOrFail')->willThrowException(
