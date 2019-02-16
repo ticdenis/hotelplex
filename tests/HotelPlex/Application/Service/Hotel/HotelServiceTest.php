@@ -51,7 +51,7 @@ class HotelServiceTest extends TestCase
         $service = new HotelService($this->mockRepository);
         $this->mockRequest->method('uuid')->willReturn($this->mockHotel->uuid());
         // Action
-        $this->mockPresenter = $service->execute($this->mockRequest, $this->mockPresenter);
+        $this->mockPresenter = $service->__invoke($this->mockRequest, $this->mockPresenter);
         $hotel = $this->mockPresenter->read();
         // Assert
         $this->assertNotNull($hotel);
@@ -71,6 +71,6 @@ class HotelServiceTest extends TestCase
         // Assert
         $this->expectException(HotelNotFoundException::class);
         // Action
-        $service->execute($this->mockRequest, $this->mockPresenter);
+        $service->__invoke($this->mockRequest, $this->mockPresenter);
     }
 }

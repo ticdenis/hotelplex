@@ -125,6 +125,9 @@
     "ramsey/uuid": {
         "version": "3.8.0"
     },
+    "rbdwllr/reallysimplejwt": {
+        "version": "2.0.1"
+    },
     "symfony/browser-kit": {
         "version": "v4.2.2"
     },
@@ -265,6 +268,9 @@
     },
     "symfony/yaml": {
         "version": "v4.2.2"
+    },
+    "webmozart/assert": {
+        "version": "1.4.0"
     },
     "webonyx/graphql-php": {
         "version": "v0.12.6"

@@ -40,7 +40,7 @@ class HotelResolver implements ResolverInterface, AliasedInterface
         $service = new HotelService($repository);
         $presenter = new ArrayHotelPresenter();
 
-        return $service->execute($request, $presenter)->read();
+        return $service->__invoke($request, $presenter)->read();
     }
 
     public static function getAliases()
