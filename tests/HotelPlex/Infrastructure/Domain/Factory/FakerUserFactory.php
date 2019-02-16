@@ -6,6 +6,7 @@ namespace HotelPlex\Tests\Infrastructure\Domain\Factory;
 
 use Faker\Factory;
 use Faker\Generator;
+use HotelPlex\Domain\Entity\User\InvalidHotelArgumentException;
 use HotelPlex\Domain\Entity\User\User;
 use HotelPlex\Domain\Factory\User\UserFactory;
 use HotelPlex\Domain\ValueObject\DateTimeValueObject;
@@ -29,6 +30,7 @@ class FakerUserFactory implements UserFactory
     /**
      * @param array $params
      * @return User
+     * @throws InvalidHotelArgumentException
      */
     public static function create(array $params = []): User
     {
@@ -38,6 +40,7 @@ class FakerUserFactory implements UserFactory
     /**
      * @param array $params
      * @return User
+     * @throws InvalidHotelArgumentException
      */
     public function build(array $params = []): User
     {

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace HotelPlex\Domain\Service;
 
+use HotelPlex\Domain\Entity\Provider\Provider;
+use HotelPlex\Domain\Entity\User\User;
 use HotelPlex\Domain\Exception\Auth\AuthException;
 use HotelPlex\Domain\Repository\Provider\ProviderRepository;
 use HotelPlex\Domain\Repository\User\UserRepository;
@@ -45,7 +47,9 @@ final class AuthService
      */
     public function __invoke(string $email, string $password)
     {
-        if (!$userOrProvider = $this->repository->ofEmailAndPassword($email, $password)) {
+        $userOrProvider = $this->repository->ofEmailAndPassword($email, $password);
+
+        if ($userOrProvider === null) {
             throw AuthException::withEmail($email);
         }
 

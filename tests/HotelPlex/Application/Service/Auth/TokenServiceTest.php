@@ -7,6 +7,7 @@ namespace HotelPlex\Tests\Application\Service\Auth;
 use HotelPlex\Application\Presenter\TokenPresenter;
 use HotelPlex\Application\Service\Auth\TokenRequest;
 use HotelPlex\Application\Service\Auth\TokenService;
+use HotelPlex\Domain\Entity\User\InvalidHotelArgumentException;
 use HotelPlex\Domain\Factory\Auth\TokenFactory;
 use HotelPlex\Domain\Repository\Provider\ProviderRepository;
 use HotelPlex\Domain\Repository\User\UserRepository;
@@ -54,6 +55,9 @@ final class TokenServiceTest extends TestCase
      */
     private $jwtPattern;
 
+    /**
+     * @throws InvalidHotelArgumentException
+     */
     protected function setUp()
     {
         $this->mockUser = FakerUserFactory::create();
