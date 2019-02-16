@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace HotelPlex\Domain\Factory\Auth;
 
+use HotelPlex\Domain\Entity\Provider\Provider;
+use HotelPlex\Domain\Entity\User\User;
+
 interface TokenFactory
 {
     /**

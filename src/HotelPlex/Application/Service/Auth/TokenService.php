@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HotelPlex\Application\Service\Auth;
 
-use HotelPlex\Application\Presenter\TokenPresenter;
+use HotelPlex\Application\Presenter\Auth\TokenPresenter;
 use HotelPlex\Application\Service\Service;
 use HotelPlex\Domain\Exception\Auth\AuthException;
 use HotelPlex\Domain\Factory\Auth\TokenFactory;

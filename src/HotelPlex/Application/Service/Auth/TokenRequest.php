@@ -6,7 +6,7 @@ namespace HotelPlex\Application\Service\Auth;
 
 use HotelPlex\Application\Service\Request;
 
-final class TokenRequest implements Request
+class TokenRequest implements Request
 {
     /**
      * @var string

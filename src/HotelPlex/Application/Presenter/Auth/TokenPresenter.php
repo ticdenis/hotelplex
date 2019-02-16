@@ -2,10 +2,15 @@
 
 declare(strict_types=1);
 
-namespace HotelPlex\Application\Presenter;
+namespace HotelPlex\Application\Presenter\Auth;
 
-final class TokenPresenter implements Presenter
+use HotelPlex\Application\Presenter\Presenter;
+
+class TokenPresenter implements Presenter
 {
+    /**
+     * @var string|null
+     */
     private $token;
 
     /**

@@ -7,9 +7,12 @@ namespace HotelPlex\Tests\Infrastructure\Domain\Factory;
 use Faker\Factory;
 use Faker\Generator;
 use HotelPlex\Domain\Entity\Provider\Provider;
+use HotelPlex\Domain\Entity\Provider\ProviderEmail;
+use HotelPlex\Domain\Entity\Provider\ProviderPassword;
 use HotelPlex\Domain\Factory\Provider\ProviderFactory;
 use HotelPlex\Domain\ValueObject\DateTimeValueObject;
 use HotelPlex\Domain\ValueObject\UuidValueObject;
+use Tasky\Domain\Model\User\ProviderInvalidEmailException;
 
 class FakerProviderFactory implements ProviderFactory
 {
@@ -29,6 +32,7 @@ class FakerProviderFactory implements ProviderFactory
     /**
      * @param array $params
      * @return Provider
+     * @throws ProviderInvalidEmailException
      */
     public static function create(array $params = []): Provider
     {
@@ -38,14 +42,15 @@ class FakerProviderFactory implements ProviderFactory
     /**
      * @param array $params
      * @return Provider
+     * @throws ProviderInvalidEmailException
      */
     public function build(array $params = []): Provider
     {
         return new Provider(
             $params['uuid'] ?? new UuidValueObject($this->faker->uuid),
             $params['username'] ?? $this->faker->name,
-            $params['email'] ?? $this->faker->address,
-            $params['password'] ?? $this->faker->phoneNumber,
+            $params['email'] ?? new ProviderEmail($this->faker->email),
+            $params['password'] ?? new ProviderPassword($this->faker->password),
             $params['createdAt'] ?? new DateTimeValueObject($this->faker->dateTime),
             $params['updatedAt'] ?? new DateTimeValueObject($this->faker->dateTime)
         );

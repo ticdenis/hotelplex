@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HotelPlex\Domain\Entity\User;
+namespace HotelPlex\Domain\Entity\Provider;
 
 use HotelPlex\Domain\ValueObject\StringValueObject;
 use Tasky\Domain\Model\User\ProviderInvalidEmailException;
