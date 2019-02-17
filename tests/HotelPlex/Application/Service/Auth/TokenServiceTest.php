@@ -85,7 +85,7 @@ final class TokenServiceTest extends TestCase
         // Arrange
         $this->mockUserRepository->method('ofEmailAndPassword')->willReturn($this->mockUser);
         $this->mockTokenFactory->method('build')->willReturn($this->fakeToken);
-        $service = new TokenService($this->mockUserRepository, $this->mockTokenFactory);
+        $service = new TokenService($this->mockUserRepository, $this->mockProviderRepository, $this->mockTokenFactory);
         $this->mockRequest->method('email')->willReturn($this->mockUser->email()->value());
         $this->mockRequest->method('password')->willReturn($this->mockUser->password()->value());
         // Action
@@ -98,17 +98,81 @@ final class TokenServiceTest extends TestCase
      * @test
      * @throws AuthException
      */
+    public function shouldThrowAnAuthExceptionAsUserByInvalidEmail()
+    {
+        // Arrange
+        $this->mockUserRepository->method('ofEmailAndPassword')->willThrowException(
+            AuthException::withEmail('test@hotelplex.com')
+        );
+        $service = new TokenService($this->mockUserRepository, $this->mockProviderRepository, $this->mockTokenFactory);
+        // Action
+        $this->expectException(AuthException::class);
+        // Assert
+        $service->__invoke($this->mockRequest, $this->presenter);
+    }
+
+    /**
+     * @test
+     * @throws AuthException
+     */
+    public function shouldThrowAnAuthExceptionAsUserByNotFound()
+    {
+        // Arrange
+        $service = new TokenService($this->mockUserRepository, $this->mockProviderRepository, $this->mockTokenFactory);
+        // Assert
+        $this->expectException(AuthException::class);
+        // Action
+        $service->__invoke($this->mockRequest, $this->presenter);
+    }
+
+    /**
+     * @test
+     * @throws AuthException
+     */
     public function shouldReturnATokenAsAProvider()
     {
         // Arrange
+        $this->mockUserRepository->method('ofEmailAndPassword')->willReturn(null);
         $this->mockProviderRepository->method('ofEmailAndPassword')->willReturn($this->mockProvider);
         $this->mockTokenFactory->method('build')->willReturn($this->fakeToken);
-        $service = new TokenService($this->mockProviderRepository, $this->mockTokenFactory);
+        $service = new TokenService($this->mockUserRepository, $this->mockProviderRepository, $this->mockTokenFactory);
         $this->mockRequest->method('email')->willReturn($this->mockProvider->email()->value());
         $this->mockRequest->method('password')->willReturn($this->mockProvider->password()->value());
         // Action
         $service->__invoke($this->mockRequest, $this->presenter);
         // Assert
         $this->assertRegExp($this->jwtPattern, $this->presenter->read());
+    }
+
+    /**
+     * @test
+     * @throws AuthException
+     */
+    public function shouldThrowAnAuthExceptionAsProviderByInvalidEmail()
+    {
+        // Arrange
+        $this->mockUserRepository->method('ofEmailAndPassword')->willReturn(null);
+        $this->mockProviderRepository->method('ofEmailAndPassword')->willThrowException(
+            AuthException::withEmail('test@hotelplex.com')
+        );
+        $service = new TokenService($this->mockUserRepository, $this->mockProviderRepository, $this->mockTokenFactory);
+        // Action
+        $this->expectException(AuthException::class);
+        // Assert
+        $service->__invoke($this->mockRequest, $this->presenter);
+    }
+
+    /**
+     * @test
+     * @throws AuthException
+     */
+    public function shouldThrowAnAuthExceptionAsProviderByNotFound()
+    {
+        // Arrange
+        $service = new TokenService($this->mockUserRepository, $this->mockProviderRepository, $this->mockTokenFactory);
+        // Assert
+        $this->expectException(AuthException::class);
+        // Action
+        $service->__invoke($this->mockRequest, $this->presenter);
     }
 }

@@ -2,6 +2,14 @@ Query:
   type: object
   config:
     fields:
+      token:
+        type: "String!"
+        args:
+          email:
+            type: "String!"
+          password:
+            type: "String!"
+        resolve: "@=resolver('TokenResolver', [args])"
       hotelInfo:
         type: "Hotel!"
         args:

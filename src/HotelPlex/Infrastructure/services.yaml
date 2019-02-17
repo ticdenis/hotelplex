@@ -11,6 +11,12 @@ services:
   hotelplex.mapper.hotel:
     class: HotelPlex\Infrastructure\Mapper\Hotel\AutoMapperPlusHotelMapper
 
+  hotelplex.mapper.user:
+    class: HotelPlex\Infrastructure\Mapper\User\AutoMapperPlusUserMapper
+
+  hotelplex.mapper.provider:
+    class: HotelPlex\Infrastructure\Mapper\Provider\AutoMapperPlusProviderMapper
+
   # Repositories
   hotelplex.repository.hotel:
     class: HotelPlex\Infrastructure\Repository\Hotel\DoctrineHotelRepository
@@ -18,11 +24,27 @@ services:
       - '@doctrine.orm.entity_manager'
       - '@hotelplex.mapper.hotel'
 
+  hotelplex.repository.user:
+    class: HotelPlex\Infrastructure\Repository\User\DoctrineUserRepository
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@hotelplex.mapper.user'
+
+  hotelplex.repository.provider:
+    class: HotelPlex\Infrastructure\Repository\Provider\DoctrineProviderRepository
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@hotelplex.mapper.provider'
+
   # Resolvers
   App\GraphQL\Resolver\HotelResolver:
     arguments:
       - '@service_container'
 
   App\GraphQL\Resolver\HotelsResolver:
+    arguments:
+      - '@service_container'
+
+  App\GraphQL\Resolver\TokenResolver:
     arguments:
       - '@service_container'
