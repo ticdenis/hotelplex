@@ -9,7 +9,7 @@ use HotelPlex\Application\Service\Service;
 use HotelPlex\Domain\Entity\Provider\Provider;
 use HotelPlex\Domain\Repository\Provider\ProviderRepository;
 
-final class ProviderRegisterService implements Service
+final class RegisterProviderService implements Service
 {
 
     /**

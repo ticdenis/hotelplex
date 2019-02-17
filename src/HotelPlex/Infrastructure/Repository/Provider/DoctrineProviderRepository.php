@@ -60,11 +60,13 @@ class DoctrineProviderRepository extends DoctrineBaseRepository implements Provi
      */
     public function create(Provider $provider): void
     {
-        $this->connection->insert($this->providersTable,
-            [
-                $provider->uuid()->value(), $provider->username(), $provider->email()->value(),
-                $provider->password()->value(), $provider->createdAt()->value()->getTimestamp(),
-                $provider->updatedAt()->value()->getTimestamp()
-            ]);
+        $this->connection->insert($this->providersTable, [
+            'uuid' => $provider->uuid()->value(),
+            'username' => $provider->username(),
+            'email' => $provider->email()->value(),
+            'password' => $provider->password()->value(),
+            'created_at' => $provider->createdAt()->value()->format('Y-m-d H:i:s'),
+            'updated_at' => $provider->updatedAt()->value()->format('Y-m-d H:i:s')
+        ]);
     }
 }

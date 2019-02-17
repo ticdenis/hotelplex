@@ -6,7 +6,7 @@ namespace HotelPlex\Tests\Application\Service\Provider;
 
 use HotelPlex\Application\Presenter\EmptyPresenter;
 use HotelPlex\Application\Service\Provider\ProviderRegisterRequest;
-use HotelPlex\Application\Service\Provider\ProviderRegisterService;
+use HotelPlex\Application\Service\Provider\RegisterProviderService;
 use HotelPlex\Domain\Entity\Provider\Provider;
 use HotelPlex\Domain\Event\DomainEventPublisher;
 use HotelPlex\Domain\Event\Provider\ProviderRegistered;
@@ -67,7 +67,7 @@ final class ProviderRegisterServiceTest extends TestCase
             }));
 
         // Action
-        $service = new ProviderRegisterService($mockRepository);
+        $service = new RegisterProviderService($mockRepository);
         $service->__invoke($this->request, new EmptyPresenter());
     }
 
@@ -83,7 +83,7 @@ final class ProviderRegisterServiceTest extends TestCase
         $mockRepository = $this->createMock(ProviderRepository::class);
 
         // Action
-        $service = new ProviderRegisterService($mockRepository);
+        $service = new RegisterProviderService($mockRepository);
         $service->__invoke($this->request, new EmptyPresenter());
 
         DomainEventPublisher::instance()->unsubscribe($id);

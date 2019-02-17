@@ -1,0 +1,16 @@
+Mutation:
+  type: object
+  config:
+    fields:
+      registerProvider:
+        type: "Boolean!"
+        args:
+          uuid:
+            type: "String!"
+          username:
+            type: "String!"
+          email:
+            type: "String!"
+          password:
+            type: "String!"
+        resolve: "@=resolver('RegisterProviderResolver', [args])"
