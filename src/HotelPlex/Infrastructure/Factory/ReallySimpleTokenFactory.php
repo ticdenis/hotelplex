@@ -7,7 +7,6 @@ namespace HotelPlex\Infrastructure\Factory;
 use HotelPlex\Domain\Entity\Provider\Provider;
 use HotelPlex\Domain\Entity\User\User;
 use HotelPlex\Domain\Factory\Auth\TokenFactory;
-use DateTime;
 use ReallySimpleJWT\Build;
 use ReallySimpleJWT\Exception\ValidateException;
 use ReallySimpleJWT\Token;
@@ -25,7 +24,7 @@ final class ReallySimpleTokenFactory implements TokenFactory
      */
     private $secret;
     /**
-     * @var DateTime
+     * @var int
      */
     private $expiration;
     /**
@@ -35,10 +34,10 @@ final class ReallySimpleTokenFactory implements TokenFactory
 
     /**
      * @param string $secret
-     * @param DateTime $expiration
+     * @param int $expiration
      * @param string $issuer
      */
-    public function __construct(string $secret, DateTime $expiration, string $issuer = self::DEFAULT_ISSUER)
+    public function __construct(string $secret, int $expiration, string $issuer = self::DEFAULT_ISSUER)
     {
         $this->builder = Token::builder();
         $this->secret = $secret;
@@ -55,7 +54,7 @@ final class ReallySimpleTokenFactory implements TokenFactory
     {
         return $this->builder->setPayloadClaim('uuid', $userOrProvider->uuid()->value())
             ->setSecret($this->secret)
-            ->setExpiration($this->expiration->getTimestamp())
+            ->setExpiration($this->expiration)
             ->setIssuer($this->issuer)
             ->build()
             ->getToken();

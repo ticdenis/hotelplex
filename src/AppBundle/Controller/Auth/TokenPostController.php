@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller\Auth;
 
-use DateTime;
 use HotelPlex\Application\Presenter\Auth\TokenPresenter;
 use HotelPlex\Application\Service\Auth\TokenRequest;
 use HotelPlex\Application\Service\Auth\TokenService;
 use HotelPlex\Domain\Exception\Auth\AuthException;
+use HotelPlex\Domain\ValueObject\DateTimeValueObject;
 use HotelPlex\Infrastructure\Factory\ReallySimpleTokenFactory;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -39,7 +39,10 @@ final class TokenPostController
     {
         $userRepository = $this->container->get('hotelplex.repository.user');
         $providerRepository = $this->container->get('hotelplex.repository.provider');
-        $tokenFactory = new ReallySimpleTokenFactory('secret123456A*', (new DateTime())->modify('+14 days'));
+        $tokenFactory = new ReallySimpleTokenFactory(
+            getenv('TOKEN_SECRET'),
+            DateTimeValueObject::nowModify(getenv('TOKEN_EXPIRATION_DAYS'), 'days')->value()->getTimestamp()
+        );
 
         $service = new TokenService($userRepository, $providerRepository, $tokenFactory);
 

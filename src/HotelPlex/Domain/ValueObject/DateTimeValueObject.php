@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HotelPlex\Domain\ValueObject;
 
+use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
@@ -51,6 +52,24 @@ class DateTimeValueObject extends ValueObject
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         return new self(new DateTimeImmutable('now', $timezone));
+    }
+
+    /** @noinspection PhpDocMissingThrowsInspection */
+    /**
+     * @param DateTimeZone|null $timezone
+     * @param string|int $value
+     * @param string $type
+     * @return DateTimeValueObject
+     */
+    public static function nowModify($value, string $type, DateTimeZone $timezone = null): DateTimeValueObject
+    {
+        $datetime = self::now($timezone)->value();
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $datetime = new DateTime($datetime->format('Y-m-d H:i:s'), $datetime->getTimezone());
+
+        $datetime->modify($value . ' ' . $type);
+
+        return self::fromInt($datetime->getTimestamp(), $datetime->getTimezone());
     }
 
     /**
