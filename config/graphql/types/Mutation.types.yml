@@ -13,4 +13,4 @@ Mutation:
             type: "String!"
           password:
             type: "String!"
-        resolve: "@=resolver('RegisterProviderResolver', [args])"
+        resolve: '@=resolver("App\\GraphQL\\Provider\\RegisterProviderResolver", [args])'

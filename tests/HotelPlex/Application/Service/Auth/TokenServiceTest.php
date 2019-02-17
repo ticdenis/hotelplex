@@ -7,7 +7,9 @@ namespace HotelPlex\Tests\Application\Service\Auth;
 use HotelPlex\Application\Presenter\Auth\TokenPresenter;
 use HotelPlex\Application\Service\Auth\TokenRequest;
 use HotelPlex\Application\Service\Auth\TokenService;
+use HotelPlex\Domain\Entity\Provider\Provider;
 use HotelPlex\Domain\Entity\User\InvalidHotelArgumentException;
+use HotelPlex\Domain\Entity\User\User;
 use HotelPlex\Domain\Exception\Auth\AuthException;
 use HotelPlex\Domain\Factory\Auth\TokenFactory;
 use HotelPlex\Domain\Repository\Provider\ProviderRepository;
@@ -16,17 +18,17 @@ use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerProviderFactory;
 use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerUserFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Tasky\Domain\Model\User\ProviderInvalidEmailException;
+use Tasky\Domain\Model\Provider\ProviderInvalidEmailException;
 use Tasky\Domain\Model\User\UserInvalidEmailException;
 
 final class TokenServiceTest extends TestCase
 {
     /**
-     * @var MockObject
+     * @var User
      */
     private $mockUser;
     /**
-     * @var MockObject
+     * @var Provider
      */
     private $mockProvider;
     /**

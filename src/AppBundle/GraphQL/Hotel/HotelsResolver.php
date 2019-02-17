@@ -4,50 +4,26 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Hotel;
 
+use App\GraphQL\BaseResolver;
 use HotelPlex\Application\Service\EmptyRequest;
 use HotelPlex\Application\Service\Hotel\HotelListService;
-use HotelPlex\Domain\Entity\Hotel\Hotel;
-use HotelPlex\Domain\Repository\Hotel\HotelRepository;
-use HotelPlex\Domain\ValueObject\UuidValueObject;
 use HotelPlex\Infrastructure\Presenter\ArrayHotelListPresenter;
 use HotelPlex\Infrastructure\Presenter\ArrayHotelPresenter;
-use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerHotelFactory;
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Psr\Container\ContainerInterface;
+use Overblog\GraphQLBundle\Definition\Argument;
 
-class HotelsResolver implements ResolverInterface, AliasedInterface
+class HotelsResolver extends BaseResolver
 {
     /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
-     * @param ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
-
-    /**
+     * @param Argument $args
      * @return mixed
      */
-    public function resolve()
+    public function resolve(Argument $args)
     {
-        $repository = $this->container->get('hotelplex.repository.hotel');
-        $request = new EmptyRequest();
-        $service = new HotelListService($repository);
-        $presenter = new ArrayHotelListPresenter(new ArrayHotelPresenter());
-
-        return $service->__invoke($request, $presenter)->read();
-    }
-
-    public static function getAliases()
-    {
-        return [
-            'resolve' => 'HotelsResolver'
-        ];
+        return (new HotelListService(
+            $this->container->get('hotelplex.repository.hotel')
+        ))(
+            new EmptyRequest(),
+            new ArrayHotelListPresenter(new ArrayHotelPresenter())
+        )->read();
     }
 }

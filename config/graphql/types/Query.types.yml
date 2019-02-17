@@ -9,13 +9,13 @@ Query:
             type: "String!"
           password:
             type: "String!"
-        resolve: "@=resolver('TokenResolver', [args])"
+        resolve: '@=resolver("App\\GraphQL\\Auth\\TokenResolver", [args])'
       hotelInfo:
         type: "Hotel!"
         args:
           uuid:
             type: "String!"
-        resolve: "@=resolver('HotelResolver', [args])"
+        resolve: '@=resolver("App\\GraphQL\\Hotel\\HotelResolver", [args])'
       hotelsInfo:
         type: "[Hotel!]!"
-        resolve: "@=resolver('HotelsResolver', [args])"
+        resolve: '@=resolver("App\\GraphQL\\Hotel\\HotelsResolver", [args])'
