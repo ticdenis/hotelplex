@@ -1,0 +1,21 @@
+services:
+  _defaults:
+    public: true
+
+  hotelplex.repository.hotel:
+    class: HotelPlex\Infrastructure\Repository\Hotel\DoctrineHotelRepository
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@hotelplex.mapper.hotel'
+
+  hotelplex.repository.user:
+    class: HotelPlex\Infrastructure\Repository\User\DoctrineUserRepository
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@hotelplex.mapper.user'
+
+  hotelplex.repository.provider:
+    class: HotelPlex\Infrastructure\Repository\Provider\DoctrineProviderRepository
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@hotelplex.mapper.provider'

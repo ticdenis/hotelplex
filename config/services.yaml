@@ -6,7 +6,13 @@
 parameters:
 
 imports:
-    - { resource: ../src/HotelPlex/Infrastructure/services.yaml }
+    # HotelPlex
+    - { resource: ../src/HotelPlex/Infrastructure/Mapper/services.yaml }
+    - { resource: ../src/HotelPlex/Infrastructure/Presenter/services.yaml }
+    - { resource: ../src/HotelPlex/Infrastructure/Repository/services.yaml }
+    # AppBundle
+    - { resource: ../src/AppBundle/DataFixtures/services.yaml }
+    - { resource: ../src/AppBundle/GraphQL/services.yaml }
 
 services:
     # default configuration for services in *this* file

@@ -37,7 +37,7 @@ final class TokenService implements Service
     /**
      * @param TokenRequest $request
      * @param TokenPresenter $presenter
-     * @return string
+     * @return TokenPresenter
      * @throws AuthException
      */
     public function __invoke($request, $presenter)

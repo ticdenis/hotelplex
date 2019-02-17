@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\GraphQL\Resolver;
+namespace App\GraphQL\Hotel;
 
 use HotelPlex\Application\Service\EmptyRequest;
 use HotelPlex\Application\Service\Hotel\HotelListService;

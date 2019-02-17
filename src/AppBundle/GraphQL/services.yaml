@@ -1,0 +1,19 @@
+services:
+  _defaults:
+    public: true
+
+  # Auth
+
+  App\GraphQL\Auth\TokenResolver:
+    arguments:
+      - '@service_container'
+
+  # Hotel
+
+  App\GraphQL\Hotel\HotelResolver:
+    arguments:
+      - '@service_container'
+
+  App\GraphQL\Hotel\HotelsResolver:
+    arguments:
+      - '@service_container'

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\GraphQL\Resolver;
+namespace App\GraphQL\Auth;
 
 use DateTime;
 use HotelPlex\Application\Presenter\Auth\TokenPresenter;
