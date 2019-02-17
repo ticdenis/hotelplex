@@ -12,7 +12,7 @@ use HotelPlex\Domain\Entity\Provider\ProviderPassword;
 use HotelPlex\Domain\Factory\Provider\ProviderFactory;
 use HotelPlex\Domain\ValueObject\DateTimeValueObject;
 use HotelPlex\Domain\ValueObject\UuidValueObject;
-use Tasky\Domain\Model\User\ProviderInvalidEmailException;
+use Tasky\Domain\Model\Provider\ProviderInvalidEmailException;
 
 class FakerProviderFactory implements ProviderFactory
 {

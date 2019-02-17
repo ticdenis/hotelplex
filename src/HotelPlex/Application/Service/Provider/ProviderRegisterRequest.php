@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-namespace HotelPlex\Application\Service;
+namespace HotelPlex\Application\Service\Provider;
 
-use HotelPlex\Domain\Entity\User\ProviderEmail;
-use HotelPlex\Domain\Entity\User\ProviderPassword;
+
+use HotelPlex\Application\Service\Request;
+use HotelPlex\Domain\Entity\Provider\ProviderEmail;
+use HotelPlex\Domain\Entity\Provider\ProviderPassword;
 use HotelPlex\Domain\ValueObject\UuidValueObject;
-use Tasky\Domain\Model\User\ProviderInvalidEmailException;
+use Tasky\Domain\Model\Provider\ProviderInvalidEmailException;
 
 final class ProviderRegisterRequest implements Request
 {
@@ -42,22 +44,19 @@ final class ProviderRegisterRequest implements Request
      * @param string $username
      * @param string $email
      * @param string $password
-     * @param array $hotels
      * @throws ProviderInvalidEmailException
      */
     public function __construct(
         string $uuid,
         string $username,
         string $email,
-        string $password,
-        array $hotels
+        string $password
     )
     {
         $this->uuid = new UuidValueObject($uuid);
         $this->username = $username;
         $this->email = new ProviderEmail($email);
         $this->password = new ProviderPassword($password);
-        $this->hotels = $hotels;
     }
 
     /**
@@ -90,14 +89,6 @@ final class ProviderRegisterRequest implements Request
     public function password(): ProviderPassword
     {
         return $this->password;
-    }
-
-    /**
-     * @return array
-     */
-    public function hotels(): array
-    {
-        return $this->hotels;
     }
 
 }

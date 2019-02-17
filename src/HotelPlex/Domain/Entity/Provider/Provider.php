@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace HotelPlex\Domain\Entity\Provider;
 
 use HotelPlex\Domain\Event\DomainEventPublisher;
+use HotelPlex\Domain\Event\Provider\ProviderRegistered;
 use HotelPlex\Domain\ValueObject\DateTimeValueObject;
 use HotelPlex\Domain\ValueObject\UuidValueObject;
-use Tasky\Domain\Model\User\ProviderRegistered;
 
 final class Provider
 {
@@ -58,18 +58,16 @@ final class Provider
      * @param string $username
      * @param ProviderEmail $email
      * @param ProviderPassword $password
-     * @param array $hotels
      * @return Provider
      */
     public static function register(
         UuidValueObject $uuid,
         string $username,
         ProviderEmail $email,
-        ProviderPassword $password,
-        array $hotels
+        ProviderPassword $password
     ): self
     {
-        $provider = new self($uuid, $username, $email, $password, $hotels);
+        $provider = new self($uuid, $username, $email, $password);
 
         DomainEventPublisher::instance()->publish(
             new ProviderRegistered(

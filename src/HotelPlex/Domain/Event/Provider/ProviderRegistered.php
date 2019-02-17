@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tasky\Domain\Model\User;
+namespace HotelPlex\Domain\Event\Provider;
 
 use DateTime;
 use DateTimeInterface;
