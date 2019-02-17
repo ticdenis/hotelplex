@@ -33,7 +33,6 @@ final class TokenPostController
     /**
      * @param Request $request
      * @return JsonResponse
-     * @throws \Exception
      */
     public function __invoke(Request $request)
     {
