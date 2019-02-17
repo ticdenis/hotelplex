@@ -13,21 +13,22 @@ use HotelPlex\Domain\Repository\User\UserRepository;
 final class AuthService
 {
     /**
-     * @var UserRepository|ProviderRepository
+     * @var UserRepository
      */
-    private $repository;
+    private $userRepository;
+    /**
+     * @var ProviderRepository
+     */
+    private $providerRepository;
 
     /**
-     * @param UserRepository|ProviderRepository $repository
-     * @throws AuthException
+     * @param UserRepository $userRepository
+     * @param ProviderRepository $providerRepository
      */
-    public function __construct($repository)
+    public function __construct(UserRepository $userRepository, ProviderRepository $providerRepository)
     {
-        if ($repository === null || !($repository instanceof UserRepository || $repository instanceof ProviderRepository)) {
-            throw AuthException::invalidRepository($repository ? get_class($repository) : 'null');
-        }
-
-        $this->repository = $repository;
+        $this->userRepository = $userRepository;
+        $this->providerRepository = $providerRepository;
     }
 
     /**
@@ -38,7 +39,11 @@ final class AuthService
      */
     public function __invoke(string $email, string $password)
     {
-        $userOrProvider = $this->repository->ofEmailAndPassword($email, $password);
+        $userOrProvider = $this->userRepository->ofEmailAndPassword($email, $password);
+
+        if ($userOrProvider === null) {
+            $userOrProvider = $this->providerRepository->ofEmailAndPassword($email, $password);
+        }
 
         if ($userOrProvider === null) {
             throw AuthException::withEmail($email);

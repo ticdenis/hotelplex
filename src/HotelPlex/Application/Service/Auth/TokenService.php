@@ -24,13 +24,13 @@ final class TokenService implements Service
     private $factory;
 
     /**
-     * @param UserRepository|ProviderRepository $userOrProviderRepository
+     * @param UserRepository $userRepository
+     * @param ProviderRepository $providerRepository
      * @param TokenFactory $tokenFactory
-     * @throws AuthException
      */
-    public function __construct($userOrProviderRepository, TokenFactory $tokenFactory)
+    public function __construct(UserRepository $userRepository, ProviderRepository $providerRepository, TokenFactory $tokenFactory)
     {
-        $this->service = new AuthService($userOrProviderRepository);
+        $this->service = new AuthService($userRepository, $providerRepository);
         $this->factory = $tokenFactory;
     }
 
