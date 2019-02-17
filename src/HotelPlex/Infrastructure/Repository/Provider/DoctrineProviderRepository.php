@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HotelPlex\Infrastructure\Repository\Provider;
 
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use HotelPlex\Application\Mapper\Provider\ProviderMapper;
 use HotelPlex\Domain\Entity\Provider\Provider;
@@ -51,5 +52,19 @@ class DoctrineProviderRepository extends DoctrineBaseRepository implements Provi
             ->fetch();
 
         return $item ? $this->providerMapper->item($item) : null;
+    }
+
+    /**
+     * @param Provider $provider
+     * @throws DBALException
+     */
+    public function create(Provider $provider): void
+    {
+        $this->connection->insert($this->providersTable,
+            [
+                $provider->uuid()->value(), $provider->username(), $provider->email()->value(),
+                $provider->password()->value(), $provider->createdAt()->value()->getTimestamp(),
+                $provider->updatedAt()->value()->getTimestamp()
+            ]);
     }
 }
