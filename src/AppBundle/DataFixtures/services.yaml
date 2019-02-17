@@ -1,0 +1,7 @@
+services:
+  _defaults:
+    public: true
+
+  App\DataFixtures\AppFixtures:
+    arguments:
+      - '@doctrine.dbal.default_connection'

@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    public: true
+
+  hotelplex.mapper.hotel:
+    class: HotelPlex\Infrastructure\Mapper\Hotel\AutoMapperPlusHotelMapper
+
+  hotelplex.mapper.user:
+    class: HotelPlex\Infrastructure\Mapper\User\AutoMapperPlusUserMapper
+
+  hotelplex.mapper.provider:
+    class: HotelPlex\Infrastructure\Mapper\Provider\AutoMapperPlusProviderMapper

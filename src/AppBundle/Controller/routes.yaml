@@ -1,0 +1,7 @@
+token_post_controller:
+  path: /auth/token
+  methods: [POST]
+  controller: App\Controller\Auth\TokenPostController
+  requirements:
+    email: .+
+    password: .+
