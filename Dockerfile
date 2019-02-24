@@ -1,26 +1,38 @@
-FROM composer:1.7 as builder
+FROM php:7.2-fpm
+WORKDIR "/application"
 
-COPY composer.json composer.lock /app/
-RUN composer install  \
-    --ignore-platform-reqs \
-    --no-ansi \
-    --no-autoloader \
-    --no-interaction \
-    --no-scripts
+# Install git, unzip
+RUN apt-get update \
+    && apt-get -y install git unzip vim
 
-COPY . /app/
-RUN composer dump-autoload --optimize --classmap-authoritative
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-FROM php:7.2-fpm-alpine
-WORKDIR /app
+# Install php-intl
+RUN apt-get update \
+    && apt-get install -y libicu-dev \
+    && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* \
+    && docker-php-ext-install intl
 
-RUN apk --update upgrade \
-    && apk add autoconf automake make gcc g++ rabbitmq-c rabbitmq-c-dev \
-    && pecl install amqp-1.9.3 \
-    && pecl install apcu-5.1.12 \
-    && pecl install xdebug-2.6.1 \
-    && docker-php-ext-enable amqp apcu xdebug \
-    && docker-php-ext-install pdo pdo_mysql
+# Install zip (phpUnit requirement)
+RUN apt-get update && \
+    apt-get install -y \
+    zlib1g-dev \
+    && docker-php-ext-install zip
 
-COPY --from=builder /app /var/www/
-COPY .docker/php/ /usr/local/etc/php/
+# Install mysql
+RUN docker-php-ext-install mysqli
+
+RUN apt-get update && apt-get install -y mysql-client && rm -rf /var/lib/apt
+
+# Install gd mbstring pdo
+RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libpq-dev \
+ 	&& rm -rf /var/lib/apt/lists/* \
+ 	&& docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
+	&& docker-php-ext-install gd mbstring pdo pdo_mysql pdo_pgsql
+
+# Install xdebug
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
+# Fix permission problems
+RUN usermod -u 1000 www-data

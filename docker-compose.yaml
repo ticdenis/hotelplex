@@ -1,46 +1,32 @@
 version: '3.7'
 
 services:
-  nginx:
-    container_name: hotelplex-nginx
-    image: nginx:1.15-alpine
-    ports:
-      - "8030:80"
-    volumes:
-      - .:/app
-      - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - php
-    networks:
-      default:
-        aliases:
-          - hotelplex-php.local
+    mysql:
+      container_name: hotelplex-mysql
+      image: mysql:5.7
+      volumes:
+        - "./var/mysql:/var/lib/mysql"
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+      env_file:
+          - .env
+      ports:
+        - "3330:3306"
 
-  php:
-    container_name: hotelplex-php
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "9030:9000"
-    volumes:
-      - ".:/app"
-    depends_on:
-      - mysql
+    php:
+      build: .
+      container_name: hotelplex-php
+      volumes:
+        - .:/application
+      depends_on:
+        - mysql
 
-  mysql:
-    container_name: hotelplex-mysql
-    image: mysql:5.7
-    restart: always
-    ports:
-      - "3330:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-    env_file:
-      - .env
-    volumes:
-      - "./var/mysql:/docker-entrypoint-initdb.d"
-
-networks:
-  default:
-    driver: bridge
+    webserver:
+      image: nginx:alpine
+      container_name: hoteplex-webserver
+      volumes:
+        - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      ports:
+        - "8888:80"
+      depends_on:
+        - php
