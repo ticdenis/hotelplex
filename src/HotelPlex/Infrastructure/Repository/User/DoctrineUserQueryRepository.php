@@ -8,10 +8,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use HotelPlex\Application\Mapper\User\UserMapper;
 use HotelPlex\Domain\Entity\User\User;
 use HotelPlex\Domain\Entity\User\UserPassword;
-use HotelPlex\Domain\Repository\User\UserRepository;
+use HotelPlex\Domain\Repository\User\UserQueryRepository;
 use HotelPlex\Infrastructure\Repository\DoctrineBaseRepository;
 
-class DoctrineUserRepository extends DoctrineBaseRepository implements UserRepository
+class DoctrineUserQueryRepository extends DoctrineBaseRepository implements UserQueryRepository
 {
     /**
      * @var string

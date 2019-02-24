@@ -10,6 +10,9 @@ use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerHotelFactory;
 
 class HotelFixture
 {
+    /**
+     * @param Connection $connection
+     */
     public function load(Connection $connection)
     {
         $presenter = new ArrayHotelPresenter();

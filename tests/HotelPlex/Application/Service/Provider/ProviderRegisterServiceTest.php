@@ -10,7 +10,7 @@ use HotelPlex\Application\Service\Provider\RegisterProviderService;
 use HotelPlex\Domain\Entity\Provider\Provider;
 use HotelPlex\Domain\Event\DomainEventPublisher;
 use HotelPlex\Domain\Event\Provider\ProviderRegistered;
-use HotelPlex\Domain\Repository\Provider\ProviderRepository;
+use HotelPlex\Domain\Repository\Provider\ProviderCommandRepository;
 use HotelPlex\Tests\Infrastructure\Domain\Event\SpyDomainEventListener;
 use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerProviderFactory;
 use PHPUnit\Framework\TestCase;
@@ -46,14 +46,13 @@ final class ProviderRegisterServiceTest extends TestCase
 
     /**
      * @test
-     * @throws ProviderInvalidEmailException
      */
     public function shouldRegisterProvider()
     {
         // Arrange
         $mockProvider = $this->mockProvider;
 
-        $mockRepository = $this->getMockBuilder(ProviderRepository::class)
+        $mockRepository = $this->getMockBuilder(ProviderCommandRepository::class)
             ->setMethods(['create', 'ofEmailAndPassword'])->getMock();
 
         // Assert
@@ -80,7 +79,7 @@ final class ProviderRegisterServiceTest extends TestCase
         $eventSubscriber = new SpyDomainEventListener();
         $id = DomainEventPublisher::instance()->subscribe($eventSubscriber);
 
-        $mockRepository = $this->createMock(ProviderRepository::class);
+        $mockRepository = $this->createMock(ProviderCommandRepository::class);
 
         // Action
         $service = new RegisterProviderService($mockRepository);
@@ -93,6 +92,5 @@ final class ProviderRegisterServiceTest extends TestCase
         $this->assertInstanceOf(ProviderRegistered::class, $domainEvent);
         $this->assertTrue($this->mockProvider->uuid()->value() === $domainEvent->id());
     }
-
 
 }

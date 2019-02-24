@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HotelPlex\Domain\Entity\User;
 
+use Exception;
 use HotelPlex\Domain\ValueObject\DateTimeValueObject;
 use HotelPlex\Domain\ValueObject\UuidValueObject;
 use Webmozart\Assert\Assert;
@@ -53,7 +54,7 @@ final class User
      * @param array $hotels
      * @param DateTimeValueObject $createdAt
      * @param DateTimeValueObject $updatedAt
-     * @throws InvalidHotelArgumentException
+     * @throws UserHotelsException
      */
     public function __construct(
         UuidValueObject $uuid,
@@ -76,19 +77,18 @@ final class User
 
     /**
      * @param array $hotels
-     * @throws InvalidHotelArgumentException
-     * @throws \Exception
+     * @throws UserHotelsException
      */
     private function setHotels(array $hotels): void
     {
         if (!$hotels) {
-            throw InvalidHotelArgumentException::asEmpty();
+            throw UserHotelsException::asEmpty();
         }
 
         try {
             Assert::allStringNotEmpty($hotels);
-        } catch (\Exception $e) {
-            throw InvalidHotelArgumentException::containsInvalidType();
+        } catch (Exception $e) {
+            throw UserHotelsException::containsInvalidType();
         }
 
         $this->hotels = $hotels;

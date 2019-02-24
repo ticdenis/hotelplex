@@ -8,11 +8,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use HotelPlex\Application\Mapper\Hotel\HotelMapper;
 use HotelPlex\Domain\Entity\Hotel\Hotel;
 use HotelPlex\Domain\Exception\Hotel\HotelNotFoundException;
-use HotelPlex\Domain\Repository\Hotel\HotelRepository;
+use HotelPlex\Domain\Repository\Hotel\HotelQueryRepository;
 use HotelPlex\Domain\ValueObject\UuidValueObject;
 use HotelPlex\Infrastructure\Repository\DoctrineBaseRepository;
 
-class DoctrineHotelRepository extends DoctrineBaseRepository implements HotelRepository
+final class DoctrineHotelQueryRepository extends DoctrineBaseRepository implements HotelQueryRepository
 {
     /**
      * @var string

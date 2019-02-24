@@ -95,7 +95,7 @@ class HotelTest extends TestCase
             'kitchen' => $hotelRegistered->kitchen(),
             'pets' => $hotelRegistered->pets()
         ]);
-        $this->assertNotNull($hotelRegistered->occurredOn());
+        $this->assertNotNull($hotelRegistered->domainEventOccurredOn());
     }
 
     /**
@@ -189,6 +189,6 @@ class HotelTest extends TestCase
             'logo' => $hotelUpdatedInfo->logo(),
             'images' => $hotelUpdatedInfo->images()
         ]);
-        $this->assertNotNull($hotelUpdatedInfo->occurredOn());
+        $this->assertNotNull($hotelUpdatedInfo->domainEventOccurredOn());
     }
 }

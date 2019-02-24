@@ -6,7 +6,7 @@ namespace HotelPlex\Application\Service\Hotel;
 
 use HotelPlex\Application\Presenter\Hotel\HotelListPresenter;
 use HotelPlex\Application\Service\EmptyRequest;
-use HotelPlex\Domain\Repository\Hotel\HotelRepository;
+use HotelPlex\Domain\Repository\Hotel\HotelQueryRepository;
 use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerHotelFactory;
 use PHPUnit\Framework\TestCase;
 
@@ -19,9 +19,9 @@ class HotelListServiceTest extends TestCase
     {
         // Arrange
         $mockHotels = [FakerHotelFactory::create()];
-        $mockRepository = $this->createMock(HotelRepository::class);
+        $mockRepository = $this->createMock(HotelQueryRepository::class);
         $mockRepository->method('all')->willReturn($mockHotels);
-        /** @var HotelRepository $mockRepository */
+        /** @var HotelQueryRepository $mockRepository */
         $mockPresenter = $this->getMockForAbstractClass(HotelListPresenter::class);
         $mockPresenter->method('read')->willReturn($mockHotels);
         /** @var HotelListPresenter $mockPresenter */

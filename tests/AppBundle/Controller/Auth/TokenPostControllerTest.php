@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Controller\Auth;
 
 use HotelPlex\Domain\Entity\Provider\Provider;
-use HotelPlex\Domain\Entity\User\InvalidHotelArgumentException;
 use HotelPlex\Domain\Entity\User\User;
+use HotelPlex\Domain\Entity\User\UserHotelsException;
 use HotelPlex\Domain\Factory\Auth\TokenFactory;
-use HotelPlex\Domain\Repository\Provider\ProviderRepository;
-use HotelPlex\Domain\Repository\User\UserRepository;
+use HotelPlex\Domain\Repository\Provider\ProviderQueryRepository;
+use HotelPlex\Domain\Repository\User\UserQueryRepository;
 use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerProviderFactory;
 use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerUserFactory;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -44,7 +44,7 @@ final class TokenPostControllerTest extends TestCase
     private $mockTokenFactory;
 
     /**
-     * @throws InvalidHotelArgumentException
+     * @throws UserHotelsException
      * @throws ProviderInvalidEmailException
      * @throws UserInvalidEmailException
      */
@@ -52,8 +52,8 @@ final class TokenPostControllerTest extends TestCase
     {
         $this->mockUser = FakerUserFactory::create();
         $this->mockProvider = FakerProviderFactory::create();
-        $this->mockUserRepository = $this->createMock(UserRepository::class);
-        $this->mockProviderRepository = $this->createMock(ProviderRepository::class);
+        $this->mockUserRepository = $this->createMock(UserQueryRepository::class);
+        $this->mockProviderRepository = $this->createMock(ProviderQueryRepository::class);
         $this->mockTokenFactory = $this->createMock(TokenFactory::class);
     }
 

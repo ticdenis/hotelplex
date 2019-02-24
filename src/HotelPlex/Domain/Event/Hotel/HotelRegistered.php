@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace HotelPlex\Domain\Event\Hotel;
 
-use DateTimeInterface;
-use HotelPlex\Domain\Event\DomainEvent;
-use HotelPlex\Domain\ValueObject\DateTimeValueObject;
-
-class HotelRegistered implements DomainEvent
+class HotelRegistered extends HotelDomainEvent
 {
     /**
      * @var string
@@ -54,10 +50,6 @@ class HotelRegistered implements DomainEvent
      * @var bool
      */
     private $pets;
-    /**
-     * @var DateTimeInterface
-     */
-    private $occurredOn;
 
     /**
      * @param string $uuid
@@ -86,6 +78,7 @@ class HotelRegistered implements DomainEvent
         bool $pets
     )
     {
+        parent::__construct();
         $this->uuid = $uuid;
         $this->name = $name;
         $this->address = $address;
@@ -97,7 +90,6 @@ class HotelRegistered implements DomainEvent
         $this->parking = $parking;
         $this->kitchen = $kitchen;
         $this->pets = $pets;
-        $this->occurredOn = DateTimeValueObject::now()->value();
     }
 
     /**
@@ -186,13 +178,5 @@ class HotelRegistered implements DomainEvent
     public function pets(): bool
     {
         return $this->pets;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function occurredOn(): DateTimeInterface
-    {
-        return $this->occurredOn;
     }
 }

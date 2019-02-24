@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HotelPlex\Application\Service\Provider;
 
-
 use HotelPlex\Application\Service\Request;
 use HotelPlex\Domain\Entity\Provider\ProviderEmail;
 use HotelPlex\Domain\Entity\Provider\ProviderPassword;
@@ -34,11 +33,6 @@ final class ProviderRegisterRequest implements Request
     private $password;
 
     /**
-     * @var array
-     */
-    private $hotels;
-
-    /**
      * ProviderRegisterRequest constructor.
      * @param string $uuid
      * @param string $username
@@ -60,7 +54,7 @@ final class ProviderRegisterRequest implements Request
     }
 
     /**
-     * @return string
+     * @return UuidValueObject
      */
     public function uuid(): UuidValueObject
     {
@@ -76,7 +70,7 @@ final class ProviderRegisterRequest implements Request
     }
 
     /**
-     * @return string
+     * @return ProviderEmail
      */
     public function email(): ProviderEmail
     {
@@ -84,7 +78,7 @@ final class ProviderRegisterRequest implements Request
     }
 
     /**
-     * @return string
+     * @return ProviderPassword
      */
     public function password(): ProviderPassword
     {

@@ -7,7 +7,7 @@ namespace App\GraphQL\Hotel;
 use Faker\Provider\Uuid;
 use HotelPlex\Domain\Entity\Hotel\Hotel;
 use HotelPlex\Domain\Exception\Hotel\HotelNotFoundException;
-use HotelPlex\Domain\Repository\Hotel\HotelRepository;
+use HotelPlex\Domain\Repository\Hotel\HotelQueryRepository;
 use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerHotelFactory;
 use Overblog\GraphQLBundle\Definition\Argument;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -28,7 +28,7 @@ class HotelResolverTest extends TestCase
     protected function setUp()
     {
         $this->mockHotel = FakerHotelFactory::create();
-        $this->mockHotelRepository = $this->createMock(HotelRepository::class);
+        $this->mockHotelRepository = $this->createMock(HotelQueryRepository::class);
     }
 
     /**

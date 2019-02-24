@@ -11,7 +11,7 @@ use HotelPlex\Infrastructure\Presenter\ArrayHotelListPresenter;
 use HotelPlex\Infrastructure\Presenter\ArrayHotelPresenter;
 use Overblog\GraphQLBundle\Definition\Argument;
 
-class HotelsResolver extends BaseResolver
+class HotelListResolver extends BaseResolver
 {
     /**
      * @param Argument $args

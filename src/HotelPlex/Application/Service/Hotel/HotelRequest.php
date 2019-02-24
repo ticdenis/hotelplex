@@ -23,7 +23,7 @@ class HotelRequest implements Request
     }
 
     /**
-     * @return string
+     * @return UuidValueObject
      */
     public function uuid(): UuidValueObject
     {

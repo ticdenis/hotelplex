@@ -4,13 +4,8 @@ declare(strict_types=1);
 
 namespace HotelPlex\Domain\Event\Provider;
 
-use DateTime;
-use DateTimeInterface;
-use HotelPlex\Domain\Event\DomainEvent;
-
-class ProviderRegistered implements DomainEvent
+class ProviderRegistered extends ProviderDomainEvent
 {
-
     /**
      * @var string
      */
@@ -27,11 +22,6 @@ class ProviderRegistered implements DomainEvent
     private $email;
 
     /**
-     * @var DateTime
-     */
-    private $occurredOn;
-
-    /**
      * @param string $id
      * @param string $username
      * @param string $email
@@ -42,10 +32,10 @@ class ProviderRegistered implements DomainEvent
         string $email
     )
     {
+        parent::__construct();
         $this->id = $id;
         $this->username = $username;
         $this->email = $email;
-        $this->occurredOn = new DateTime();
     }
 
     /**
@@ -70,14 +60,6 @@ class ProviderRegistered implements DomainEvent
     public function email(): string
     {
         return $this->email;
-    }
-
-    /**
-     * @return
-     */
-    public function occurredOn(): DateTimeInterface
-    {
-        return $this->occurredOn;
     }
 
     /**

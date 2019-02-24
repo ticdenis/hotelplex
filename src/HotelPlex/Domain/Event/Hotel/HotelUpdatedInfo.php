@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace HotelPlex\Domain\Event\Hotel;
 
-use DateTimeInterface;
-use HotelPlex\Domain\Event\DomainEvent;
-use HotelPlex\Domain\ValueObject\DateTimeValueObject;
-
-class HotelUpdatedInfo implements DomainEvent
+class HotelUpdatedInfo extends HotelDomainEvent
 {
     /**
      * @var string
@@ -66,10 +62,6 @@ class HotelUpdatedInfo implements DomainEvent
      * @var array
      */
     private $images;
-    /**
-     * @var DateTimeInterface
-     */
-    private $occurredOn;
 
     /**
      * @param string $uuid
@@ -104,6 +96,7 @@ class HotelUpdatedInfo implements DomainEvent
         array $images
     )
     {
+        parent::__construct();
         $this->uuid = $uuid;
         $this->name = $name;
         $this->address = $address;
@@ -118,7 +111,6 @@ class HotelUpdatedInfo implements DomainEvent
         $this->paymentMethods = $paymentMethods;
         $this->logo = $logo;
         $this->images = $images;
-        $this->occurredOn = DateTimeValueObject::now()->value();
     }
 
     /**
@@ -231,13 +223,5 @@ class HotelUpdatedInfo implements DomainEvent
     public function images(): array
     {
         return $this->images;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function occurredOn(): DateTimeInterface
-    {
-        return $this->occurredOn;
     }
 }

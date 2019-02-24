@@ -21,6 +21,9 @@ class AppFixtures extends Fixture
         $this->connection = $connection;
     }
 
+    /**
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         (new HotelFixture())->load($this->connection);

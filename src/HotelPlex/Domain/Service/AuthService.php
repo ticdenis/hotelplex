@@ -7,25 +7,25 @@ namespace HotelPlex\Domain\Service;
 use HotelPlex\Domain\Entity\Provider\Provider;
 use HotelPlex\Domain\Entity\User\User;
 use HotelPlex\Domain\Exception\Auth\AuthException;
-use HotelPlex\Domain\Repository\Provider\ProviderRepository;
-use HotelPlex\Domain\Repository\User\UserRepository;
+use HotelPlex\Domain\Repository\Provider\ProviderQueryRepository;
+use HotelPlex\Domain\Repository\User\UserQueryRepository;
 
 final class AuthService
 {
     /**
-     * @var UserRepository
+     * @var UserQueryRepository
      */
     private $userRepository;
     /**
-     * @var ProviderRepository
+     * @var ProviderQueryRepository
      */
     private $providerRepository;
 
     /**
-     * @param UserRepository $userRepository
-     * @param ProviderRepository $providerRepository
+     * @param UserQueryRepository $userRepository
+     * @param ProviderQueryRepository $providerRepository
      */
-    public function __construct(UserRepository $userRepository, ProviderRepository $providerRepository)
+    public function __construct(UserQueryRepository $userRepository, ProviderQueryRepository $providerRepository)
     {
         $this->userRepository = $userRepository;
         $this->providerRepository = $providerRepository;

@@ -8,8 +8,8 @@ use HotelPlex\Application\Presenter\Auth\TokenPresenter;
 use HotelPlex\Application\Service\Service;
 use HotelPlex\Domain\Exception\Auth\AuthException;
 use HotelPlex\Domain\Factory\Auth\TokenFactory;
-use HotelPlex\Domain\Repository\Provider\ProviderRepository;
-use HotelPlex\Domain\Repository\User\UserRepository;
+use HotelPlex\Domain\Repository\Provider\ProviderQueryRepository;
+use HotelPlex\Domain\Repository\User\UserQueryRepository;
 use HotelPlex\Domain\Service\AuthService;
 
 final class TokenService implements Service
@@ -24,11 +24,11 @@ final class TokenService implements Service
     private $factory;
 
     /**
-     * @param UserRepository $userRepository
-     * @param ProviderRepository $providerRepository
+     * @param UserQueryRepository $userRepository
+     * @param ProviderQueryRepository $providerRepository
      * @param TokenFactory $tokenFactory
      */
-    public function __construct(UserRepository $userRepository, ProviderRepository $providerRepository, TokenFactory $tokenFactory)
+    public function __construct(UserQueryRepository $userRepository, ProviderQueryRepository $providerRepository, TokenFactory $tokenFactory)
     {
         $this->service = new AuthService($userRepository, $providerRepository);
         $this->factory = $tokenFactory;

@@ -5,22 +5,21 @@ declare(strict_types=1);
 namespace HotelPlex\Application\Service\Hotel;
 
 use HotelPlex\Application\Presenter\Hotel\HotelPresenter;
-use HotelPlex\Application\Service\EmptyRequest;
 use HotelPlex\Application\Service\Service;
 use HotelPlex\Domain\Exception\Hotel\HotelNotFoundException;
-use HotelPlex\Domain\Repository\Hotel\HotelRepository;
+use HotelPlex\Domain\Repository\Hotel\HotelQueryRepository;
 
 class HotelService implements Service
 {
     /**
-     * @var HotelRepository
+     * @var HotelQueryRepository
      */
     private $repository;
 
     /**
-     * @param HotelRepository $repository
+     * @param HotelQueryRepository $repository
      */
-    public function __construct(HotelRepository $repository)
+    public function __construct(HotelQueryRepository $repository)
     {
         $this->repository = $repository;
     }

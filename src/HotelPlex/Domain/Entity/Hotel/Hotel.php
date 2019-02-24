@@ -68,14 +68,6 @@ class Hotel
      * @var array
      */
     private $images;
-    /**
-     * @var DateTimeValueObject
-     */
-    private $createdAt;
-    /**
-     * @var DateTimeValueObject
-     */
-    private $updatedAt;
 
     /**
      * @param UuidValueObject $uuid
@@ -92,8 +84,6 @@ class Hotel
      * @param array $paymentMethods
      * @param string $logo
      * @param array $images
-     * @param DateTimeValueObject $createdAt
-     * @param DateTimeValueObject $updatedAt
      */
     public function __construct(
         UuidValueObject $uuid,
@@ -109,9 +99,7 @@ class Hotel
         bool $pets,
         array $paymentMethods,
         ?string $logo,
-        array $images,
-        DateTimeValueObject $createdAt,
-        DateTimeValueObject $updatedAt
+        array $images
     )
     {
         $this->uuid = $uuid;
@@ -128,8 +116,6 @@ class Hotel
         $this->paymentMethods = $paymentMethods;
         $this->logo = $logo;
         $this->images = $images;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
     }
 
     /**
@@ -172,9 +158,7 @@ class Hotel
             $pets,
             [],
             null,
-            [],
-            DateTimeValueObject::now(),
-            DateTimeValueObject::now()
+            []
         );
 
         DomainEventPublisher::instance()->publish(
@@ -359,7 +343,7 @@ class Hotel
     }
 
     /**
-     * @return ?string
+     * @return string|null
      */
     public function logo(): ?string
     {
@@ -372,21 +356,5 @@ class Hotel
     public function images(): array
     {
         return $this->images;
-    }
-
-    /**
-     * @return DateTimeValueObject
-     */
-    public function createdAt(): DateTimeValueObject
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @return DateTimeValueObject
-     */
-    public function updatedAt(): DateTimeValueObject
-    {
-        return $this->updatedAt;
     }
 }

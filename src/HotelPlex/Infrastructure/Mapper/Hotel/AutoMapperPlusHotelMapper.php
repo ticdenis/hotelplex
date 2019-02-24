@@ -100,24 +100,6 @@ class AutoMapperPlusHotelMapper extends HotelMapper
                 return !isset($item->images) ? [] : map(function ($image) {
                     return $image->filename;
                 }, $item->images);
-            })
-            ->forMember('createdAt', function ($item) {
-                if (!isset($item->created_at)) {
-                    return DateTimeValueObject::now();
-                } else if (($timestamp = (int)$item->created_at) !== 0) {
-                    return DateTimeValueObject::fromInt($timestamp);
-                } else {
-                    return DateTimeValueObject::fromString($item->created_at);
-                }
-            })
-            ->forMember('updatedAt', function ($item) {
-                if (!isset($item->updated_at)) {
-                    return DateTimeValueObject::now();
-                } else if (($timestamp = (int)$item->updated_at) !== 0) {
-                    return DateTimeValueObject::fromInt($timestamp);
-                } else {
-                    return DateTimeValueObject::fromString($item->updated_at);
-                }
             });
 
         return $config;

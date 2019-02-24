@@ -6,7 +6,7 @@ namespace HotelPlex\Domain\Entity\User;
 
 use HotelPlex\Domain\Exception\DomainException;
 
-final class InvalidHotelArgumentException extends DomainException
+final class UserHotelsException extends DomainException
 {
 
     /**
@@ -19,6 +19,9 @@ final class InvalidHotelArgumentException extends DomainException
         ));
     }
 
+    /**
+     * @return UserHotelsException
+     */
     public static function containsInvalidType(): self
     {
         return new self(sprintf(

@@ -7,7 +7,7 @@ namespace HotelPlex\Application\Service\Hotel;
 use HotelPlex\Application\Presenter\Hotel\HotelPresenter;
 use HotelPlex\Domain\Entity\Hotel\Hotel;
 use HotelPlex\Domain\Exception\Hotel\HotelNotFoundException;
-use HotelPlex\Domain\Repository\Hotel\HotelRepository;
+use HotelPlex\Domain\Repository\Hotel\HotelQueryRepository;
 use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerHotelFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +34,7 @@ class HotelServiceTest extends TestCase
     protected function setUp()
     {
         $this->mockHotel = FakerHotelFactory::create();
-        $this->mockRepository = $this->createMock(HotelRepository::class);
+        $this->mockRepository = $this->createMock(HotelQueryRepository::class);
         $this->mockPresenter = $this->getMockForAbstractClass(HotelPresenter::class);
         $this->mockRequest = $this->createMock(HotelRequest::class);
     }

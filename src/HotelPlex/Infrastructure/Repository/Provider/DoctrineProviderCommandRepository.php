@@ -8,10 +8,10 @@ use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use HotelPlex\Application\Mapper\Provider\ProviderMapper;
 use HotelPlex\Domain\Entity\Provider\Provider;
-use HotelPlex\Domain\Repository\Provider\ProviderRepository;
+use HotelPlex\Domain\Repository\Provider\ProviderCommandRepository;
 use HotelPlex\Infrastructure\Repository\DoctrineBaseRepository;
 
-class DoctrineProviderRepository extends DoctrineBaseRepository implements ProviderRepository
+class DoctrineProviderCommandRepository extends DoctrineBaseRepository implements ProviderCommandRepository
 {
     /**
      * @var string

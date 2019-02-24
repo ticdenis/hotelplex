@@ -6,7 +6,7 @@ namespace HotelPlex\Domain\Repository\User;
 
 use HotelPlex\Domain\Entity\User\User;
 
-interface UserRepository
+interface UserQueryRepository
 {
     public function ofEmailAndPassword(string $email, string $password): ?User;
 }

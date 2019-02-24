@@ -10,12 +10,12 @@ Query:
           password:
             type: "String!"
         resolve: '@=resolver("App\\GraphQL\\Auth\\TokenResolver", [args])'
-      hotelInfo:
+      hotel:
         type: "Hotel!"
         args:
           uuid:
             type: "String!"
         resolve: '@=resolver("App\\GraphQL\\Hotel\\HotelResolver", [args])'
-      hotelsInfo:
+      hotelList:
         type: "[Hotel!]!"
-        resolve: '@=resolver("App\\GraphQL\\Hotel\\HotelsResolver", [args])'
+        resolve: '@=resolver("App\\GraphQL\\Hotel\\HotelListResolver", [args])'

@@ -7,17 +7,17 @@ namespace HotelPlex\Application\Service\Provider;
 use HotelPlex\Application\Presenter\EmptyPresenter;
 use HotelPlex\Application\Service\Service;
 use HotelPlex\Domain\Entity\Provider\Provider;
-use HotelPlex\Domain\Repository\Provider\ProviderRepository;
+use HotelPlex\Domain\Repository\Provider\ProviderCommandRepository;
 
 final class RegisterProviderService implements Service
 {
 
     /**
-     * @var ProviderRepository
+     * @var ProviderCommandRepository
      */
     private $providerRepository;
 
-    public function __construct(ProviderRepository $providerRepository)
+    public function __construct(ProviderCommandRepository $providerRepository)
     {
         $this->providerRepository = $providerRepository;
     }

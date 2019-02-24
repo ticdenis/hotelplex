@@ -8,7 +8,7 @@ use HotelPlex\Domain\Entity\Hotel\Hotel;
 use HotelPlex\Domain\Exception\Hotel\HotelNotFoundException;
 use HotelPlex\Domain\ValueObject\UuidValueObject;
 
-interface HotelRepository
+interface HotelQueryRepository
 {
     /**
      * @return Hotel[]
