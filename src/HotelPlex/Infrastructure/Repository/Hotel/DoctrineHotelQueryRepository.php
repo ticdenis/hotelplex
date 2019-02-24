@@ -24,10 +24,10 @@ final class DoctrineHotelQueryRepository extends DoctrineBaseRepository implemen
      */
     private $hotelMapper;
 
-    public function __construct(EntityManagerInterface $entityManager, HotelMapper $hotelMapper)
+    public function __construct(EntityManagerInterface $entityManager, HotelMapper $paymentMapper)
     {
         parent::__construct($entityManager);
-        $this->hotelMapper = $hotelMapper;
+        $this->hotelMapper = $paymentMapper;
     }
 
     /**

@@ -6,17 +6,15 @@ namespace HotelPlex\Domain\Entity\Provider;
 
 use HotelPlex\Domain\Event\DomainEventPublisher;
 use HotelPlex\Domain\Event\Provider\ProviderRegistered;
-use HotelPlex\Domain\ValueObject\DateTimeValueObject;
-use HotelPlex\Domain\ValueObject\UuidValueObject;
 
 final class Provider
 {
     /**
-     * @var UuidValueObject
+     * @var ProviderId
      */
     private $uuid;
     /**
-     * @var string
+     * @var ProviderUsername
      */
     private $username;
     /**
@@ -27,42 +25,36 @@ final class Provider
      * @var ProviderPassword
      */
     private $password;
-    /**
-     * @var DateTimeValueObject
-     */
-    private $createdAt;
-    /**
-     * @var DateTimeValueObject
-     */
-    private $updatedAt;
 
+    /**
+     * @param ProviderId $uuid
+     * @param ProviderUsername $username
+     * @param ProviderEmail $email
+     * @param ProviderPassword $password
+     */
     public function __construct(
-        UuidValueObject $uuid,
-        string $username,
+        ProviderId $uuid,
+        ProviderUsername $username,
         ProviderEmail $email,
-        ProviderPassword $password,
-        DateTimeValueObject $createdAt = null,
-        DateTimeValueObject $updatedAt = null
+        ProviderPassword $password
     )
     {
         $this->uuid = $uuid;
         $this->username = $username;
         $this->email = $email;
         $this->password = $password;
-        $this->createdAt = $createdAt ?? DateTimeValueObject::now();
-        $this->updatedAt = $updatedAt ?? DateTimeValueObject::now();
     }
 
     /**
-     * @param UuidValueObject $uuid
-     * @param string $username
+     * @param ProviderId $uuid
+     * @param ProviderUsername $username
      * @param ProviderEmail $email
      * @param ProviderPassword $password
      * @return Provider
      */
     public static function register(
-        UuidValueObject $uuid,
-        string $username,
+        ProviderId $uuid,
+        ProviderUsername $username,
         ProviderEmail $email,
         ProviderPassword $password
     ): self
@@ -72,7 +64,7 @@ final class Provider
         DomainEventPublisher::instance()->publish(
             new ProviderRegistered(
                 $uuid->value(),
-                $username,
+                $username->value(),
                 $email->value()
             )
         );
@@ -81,17 +73,17 @@ final class Provider
     }
 
     /**
-     * @return UuidValueObject
+     * @return ProviderId
      */
-    public function uuid(): UuidValueObject
+    public function uuid(): ProviderId
     {
         return $this->uuid;
     }
 
     /**
-     * @return string
+     * @return ProviderUsername
      */
-    public function username(): string
+    public function username(): ProviderUsername
     {
         return $this->username;
     }
@@ -111,21 +103,4 @@ final class Provider
     {
         return $this->password;
     }
-
-    /**
-     * @return DateTimeValueObject
-     */
-    public function createdAt(): DateTimeValueObject
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @return DateTimeValueObject
-     */
-    public function updatedAt(): DateTimeValueObject
-    {
-        return $this->updatedAt;
-    }
-
 }

@@ -2,20 +2,19 @@
 
 declare(strict_types=1);
 
-namespace HotelPlex\Infrastructure\Mapper\User;
+namespace HotelPlex\Infrastructure\Mapper\Payment;
 
 use AutoMapperPlus\AutoMapper;
 use AutoMapperPlus\Configuration\AutoMapperConfig;
-use HotelPlex\Application\Mapper\User\UserMapper;
-use HotelPlex\Domain\Entity\User\User;
-use HotelPlex\Domain\Entity\User\UserEmail;
-use HotelPlex\Domain\Entity\User\UserPassword;
-use HotelPlex\Domain\Entity\User\UserUsername;
-use HotelPlex\Domain\ValueObject\UuidValueObject;
+use HotelPlex\Application\Mapper\Payment\PaymentMapper;
+use HotelPlex\Domain\Entity\Payment\Payment;
+use HotelPlex\Domain\Entity\Payment\PaymentAmount;
+use HotelPlex\Domain\Entity\Payment\PaymentCreatedAt;
+use HotelPlex\Domain\Entity\Payment\PaymentId;
+use HotelPlex\Domain\Entity\Payment\PaymentMethod;
 use stdClass;
-use function Lambdish\Phunctional\map;
 
-class AutoMapperPlusUserMapper extends UserMapper
+class AutoMapperPlusPaymentMapper extends PaymentMapper
 {
     /**
      * @var AutoMapper
@@ -30,7 +29,7 @@ class AutoMapperPlusUserMapper extends UserMapper
     /** @noinspection PhpDocMissingThrowsInspection */
     /**
      * @param $source
-     * @return User
+     * @return Payment
      */
     public function item($source)
     {
@@ -41,7 +40,7 @@ class AutoMapperPlusUserMapper extends UserMapper
     /** @noinspection PhpDocMissingThrowsInspection */
     /**
      * @param array $sources
-     * @return User[]
+     * @return Payment[]
      */
     public function items(array $sources)
     {
@@ -58,21 +57,22 @@ class AutoMapperPlusUserMapper extends UserMapper
 
         $config->registerMapping(stdClass::class, $this->entity())
             ->forMember('uuid', function ($item) {
-                return new UuidValueObject($item->uuid);
+                return new PaymentId($item->uuid ?? $item->id);
             })
-            ->forMember('username', function ($item) {
-                return new UserUsername(!isset($item->username) ? '' : $item->username);
+            ->forMember('paymentMethod', function ($item) {
+                return new PaymentMethod($item->payment_method);
             })
-            ->forMember('email', function ($item) {
-                return !isset($item->email) ? new UserEmail('test@hotelplex.com') : new UserEmail($item->email);
+            ->forMember('amount', function ($item) {
+                return new PaymentAmount($item->currency, floatval($item->price));
             })
-            ->forMember('password', function ($item) {
-                return !isset($item->password) ? new UserPassword('test') : new UserPassword($item->password);
-            })
-            ->forMember('hotels', function ($item) {
-                return !isset($item->hotels) || !is_array($item->hotels) ? [] : map(function ($hotel) {
-                    return $hotel->uuid;
-                }, $item->hotels);
+            ->forMember('createdAt', function ($item) {
+                if (!isset($item->created_at)) {
+                    return PaymentCreatedAt::now();
+                } else if (($timestamp = (int)$item->created_at) !== 0) {
+                    return PaymentCreatedAt::fromInt($timestamp);
+                } else {
+                    return PaymentCreatedAt::fromString($item->created_at);
+                }
             });
 
         return $config;

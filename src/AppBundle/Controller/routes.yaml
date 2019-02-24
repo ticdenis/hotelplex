@@ -2,3 +2,8 @@ token_post_controller:
   path: /auth/token
   methods: [POST]
   controller: App\Controller\Auth\TokenPostController
+
+payment_list_get_controller:
+  path: /payments
+  methods: [GET]
+  controller: App\Controller\Payment\PaymentListGetController

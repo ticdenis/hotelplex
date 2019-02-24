@@ -1,0 +1,14 @@
+Payment:
+  type: object
+  config:
+    fields:
+      uuid:
+        type: 'String!'
+      paymentMethod:
+        type: 'String!'
+      currency:
+        type: 'String!'
+      price:
+        type: 'Float!'
+      createdAt:
+        type: 'String!'

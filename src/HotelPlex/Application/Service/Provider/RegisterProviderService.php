@@ -11,7 +11,6 @@ use HotelPlex\Domain\Repository\Provider\ProviderCommandRepository;
 
 final class RegisterProviderService implements Service
 {
-
     /**
      * @var ProviderCommandRepository
      */

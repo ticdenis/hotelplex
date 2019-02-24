@@ -3,19 +3,25 @@ services:
     public: true
 
   hotelplex.repository.hotel:
-    class: HotelPlex\Infrastructure\Repository\Hotel\DoctrineHotelRepository
+    class: HotelPlex\Infrastructure\Repository\Hotel\DoctrineHotelQueryRepository
     arguments:
       - '@doctrine.orm.entity_manager'
       - '@hotelplex.mapper.hotel'
 
+  hotelplex.repository.payment:
+    class: HotelPlex\Infrastructure\Repository\Payment\DoctrinePaymentQueryRepository
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@hotelplex.mapper.payment'
+
   hotelplex.repository.user:
-    class: HotelPlex\Infrastructure\Repository\User\DoctrineUserRepository
+    class: HotelPlex\Infrastructure\Repository\User\DoctrineUserQueryRepository
     arguments:
       - '@doctrine.orm.entity_manager'
       - '@hotelplex.mapper.user'
 
   hotelplex.repository.provider:
-    class: HotelPlex\Infrastructure\Repository\Provider\DoctrineProviderRepository
+    class: HotelPlex\Infrastructure\Repository\Provider\DoctrineProviderCommandRepository
     arguments:
       - '@doctrine.orm.entity_manager'
       - '@hotelplex.mapper.provider'

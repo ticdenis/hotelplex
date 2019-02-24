@@ -7,7 +7,7 @@ namespace App\GraphQL\Hotel;
 use App\GraphQL\BaseResolver;
 use HotelPlex\Application\Service\Hotel\HotelRequest;
 use HotelPlex\Application\Service\Hotel\HotelService;
-use HotelPlex\Infrastructure\Presenter\ArrayHotelPresenter;
+use HotelPlex\Infrastructure\Presenter\Hotel\ArrayHotelPresenter;
 use Overblog\GraphQLBundle\Definition\Argument;
 
 class HotelResolver extends BaseResolver

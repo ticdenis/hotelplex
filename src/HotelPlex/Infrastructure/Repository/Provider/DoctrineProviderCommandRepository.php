@@ -62,11 +62,9 @@ class DoctrineProviderCommandRepository extends DoctrineBaseRepository implement
     {
         $this->connection->insert($this->providersTable, [
             'uuid' => $provider->uuid()->value(),
-            'username' => $provider->username(),
+            'username' => $provider->username()->value(),
             'email' => $provider->email()->value(),
             'password' => $provider->password()->value(),
-            'created_at' => $provider->createdAt()->value()->format('Y-m-d H:i:s'),
-            'updated_at' => $provider->updatedAt()->value()->format('Y-m-d H:i:s')
         ]);
     }
 }

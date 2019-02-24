@@ -7,8 +7,8 @@ namespace App\GraphQL\Hotel;
 use App\GraphQL\BaseResolver;
 use HotelPlex\Application\Service\EmptyRequest;
 use HotelPlex\Application\Service\Hotel\HotelListService;
-use HotelPlex\Infrastructure\Presenter\ArrayHotelListPresenter;
-use HotelPlex\Infrastructure\Presenter\ArrayHotelPresenter;
+use HotelPlex\Infrastructure\Presenter\Hotel\ArrayHotelListPresenter;
+use HotelPlex\Infrastructure\Presenter\Hotel\ArrayHotelPresenter;
 use Overblog\GraphQLBundle\Definition\Argument;
 
 class HotelListResolver extends BaseResolver

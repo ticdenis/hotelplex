@@ -11,4 +11,3 @@ bin/console doctrine:fixtures:load # Only dev or test
 bin/console server:start # Only dev or test
 bin/console server:stop # Only dev or test
 ```
-

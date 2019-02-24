@@ -7,11 +7,11 @@ namespace HotelPlex\Infrastructure\Mapper\Provider;
 use AutoMapperPlus\AutoMapper;
 use AutoMapperPlus\Configuration\AutoMapperConfig;
 use HotelPlex\Application\Mapper\Provider\ProviderMapper;
+use HotelPlex\Domain\Entity\Provider\Provider;
 use HotelPlex\Domain\Entity\Provider\ProviderEmail;
+use HotelPlex\Domain\Entity\Provider\ProviderId;
 use HotelPlex\Domain\Entity\Provider\ProviderPassword;
-use HotelPlex\Domain\Entity\User\User;
 use HotelPlex\Domain\ValueObject\DateTimeValueObject;
-use HotelPlex\Domain\ValueObject\UuidValueObject;
 use stdClass;
 
 class AutoMapperPlusProviderMapper extends ProviderMapper
@@ -29,7 +29,7 @@ class AutoMapperPlusProviderMapper extends ProviderMapper
     /** @noinspection PhpDocMissingThrowsInspection */
     /**
      * @param $source
-     * @return User
+     * @return Provider
      */
     public function item($source)
     {
@@ -40,7 +40,7 @@ class AutoMapperPlusProviderMapper extends ProviderMapper
     /** @noinspection PhpDocMissingThrowsInspection */
     /**
      * @param array $sources
-     * @return User[]
+     * @return Provider[]
      */
     public function items(array $sources)
     {
@@ -57,7 +57,7 @@ class AutoMapperPlusProviderMapper extends ProviderMapper
 
         $config->registerMapping(stdClass::class, $this->entity())
             ->forMember('uuid', function ($item) {
-                return new UuidValueObject($item->uuid);
+                return new ProviderId($item->uuid);
             })
             ->forMember('username', function ($item) {
                 return !isset($item->username) ? '' : $item->username;

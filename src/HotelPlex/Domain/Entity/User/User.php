@@ -4,20 +4,15 @@ declare(strict_types=1);
 
 namespace HotelPlex\Domain\Entity\User;
 
-use Exception;
-use HotelPlex\Domain\ValueObject\DateTimeValueObject;
-use HotelPlex\Domain\ValueObject\UuidValueObject;
-use Webmozart\Assert\Assert;
-
 final class User
 {
     /**
-     * @var UuidValueObject
+     * @var UserId
      */
     private $uuid;
 
     /**
-     * @var string
+     * @var UserUsername
      */
     private $username;
 
@@ -32,80 +27,44 @@ final class User
     private $password;
 
     /**
-     * @var string[]
+     * @var UserHotels
      */
     private $hotels;
 
     /**
-     * @var DateTimeValueObject
-     */
-    private $createdAt;
-
-    /**
-     * @var DateTimeValueObject
-     */
-    private $updatedAt;
-
-    /**
-     * @param UuidValueObject $uuid
-     * @param string $username
+     * @param UserId $uuid
+     * @param UserUsername $username
      * @param UserEmail $email
      * @param UserPassword $password
-     * @param array $hotels
-     * @param DateTimeValueObject $createdAt
-     * @param DateTimeValueObject $updatedAt
-     * @throws UserHotelsException
+     * @param UserHotels $hotels
      */
     public function __construct(
-        UuidValueObject $uuid,
-        string $username,
+        UserId $uuid,
+        UserUsername $username,
         UserEmail $email,
         UserPassword $password,
-        array $hotels,
-        DateTimeValueObject $createdAt = null,
-        DateTimeValueObject $updatedAt = null
+        UserHotels $hotels
     )
     {
         $this->uuid = $uuid;
         $this->username = $username;
         $this->email = $email;
         $this->password = $password;
-        $this->setHotels($hotels);
-        $this->createdAt = $createdAt ?? DateTimeValueObject::now();
-        $this->updatedAt = $updatedAt ?? DateTimeValueObject::now();
-    }
-
-    /**
-     * @param array $hotels
-     * @throws UserHotelsException
-     */
-    private function setHotels(array $hotels): void
-    {
-        if (!$hotels) {
-            throw UserHotelsException::asEmpty();
-        }
-
-        try {
-            Assert::allStringNotEmpty($hotels);
-        } catch (Exception $e) {
-            throw UserHotelsException::containsInvalidType();
-        }
-
         $this->hotels = $hotels;
     }
 
     /**
-     * @return UuidValueObject
+     * @return UserId
      */
-    public function uuid(): UuidValueObject
+    public function uuid(): UserId
     {
         return $this->uuid;
     }
 
     /**
-     * @return string
+     * @return UserUsername
      */
-    public function username(): string
+    public function username(): UserUsername
     {
         return $this->username;
     }
@@ -127,27 +86,10 @@ final class User
     }
 
     /**
-     * @return array
+     * @return UserHotels
      */
-    public function hotels(): array
+    public function hotels(): UserHotels
     {
         return $this->hotels;
     }
-
-    /**
-     * @return DateTimeValueObject
-     */
-    public function createdAt(): DateTimeValueObject
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @return DateTimeValueObject
-     */
-    public function updatedAt(): DateTimeValueObject
-    {
-        return $this->updatedAt;
-    }
-
 }

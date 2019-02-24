@@ -18,7 +18,6 @@ use Tasky\Domain\Model\Provider\ProviderInvalidEmailException;
 
 final class ProviderRegisterServiceTest extends TestCase
 {
-
     /**
      * @var Provider
      */
@@ -38,7 +37,7 @@ final class ProviderRegisterServiceTest extends TestCase
         $this->mockProvider = FakerProviderFactory::create();
         $this->request = new ProviderRegisterRequest(
             $this->mockProvider->uuid()->value(),
-            $this->mockProvider->username(),
+            $this->mockProvider->username()->value(),
             $this->mockProvider->email()->value(),
             $this->mockProvider->password()->value()
         );
@@ -51,20 +50,17 @@ final class ProviderRegisterServiceTest extends TestCase
     {
         // Arrange
         $mockProvider = $this->mockProvider;
-
         $mockRepository = $this->getMockBuilder(ProviderCommandRepository::class)
             ->setMethods(['create', 'ofEmailAndPassword'])->getMock();
-
         // Assert
         $mockRepository->expects($this->once())
             ->method('create')
             ->with($this->callback(function (Provider $provider) use ($mockProvider) {
                 return
                     $provider->uuid()->equalsTo($mockProvider->uuid()) &&
-                    $provider->username() === $mockProvider->username() &&
+                    $provider->username()->equalsTo($mockProvider->username()) &&
                     $provider->email()->equalsTo($mockProvider->email());
             }));
-
         // Action
         $service = new RegisterProviderService($mockRepository);
         $service->__invoke($this->request, new EmptyPresenter());
@@ -78,16 +74,12 @@ final class ProviderRegisterServiceTest extends TestCase
         // Arrange
         $eventSubscriber = new SpyDomainEventListener();
         $id = DomainEventPublisher::instance()->subscribe($eventSubscriber);
-
         $mockRepository = $this->createMock(ProviderCommandRepository::class);
-
         // Action
         $service = new RegisterProviderService($mockRepository);
         $service->__invoke($this->request, new EmptyPresenter());
-
         DomainEventPublisher::instance()->unsubscribe($id);
         $domainEvent = $eventSubscriber->domainEvent();
-
         // Assert
         $this->assertInstanceOf(ProviderRegistered::class, $domainEvent);
         $this->assertTrue($this->mockProvider->uuid()->value() === $domainEvent->id());

@@ -8,7 +8,7 @@ hotel
 	email: string
 	lift: boolean
 	wifi: boolean
-	accesibility: boolean
+	accessibility: boolean
 	parking: boolean
 	kitchen: boolean
 	pets: boolean
@@ -104,7 +104,7 @@ BookingInfoService: Given an booking uuid returns a booking info that contains u
 
 RoomListService: Given an uuid hotel, returns the room info that contains the room uuid, tv, heating, air conditioning, wc, show, wardrobe, locker, accesibility, images and individual and double beds as associative array (int: boolean).
 
-RoomInfoService: Given an room uuid returns uuid, tv, heating, air conditioning, wc, show, wardrobe, locker, accesibility, images and individual and double beds as associative array (int: boolean).
+RoomInfoService: Given an room uuid returns uuid, tv, heating, air conditioning, wc, show, wardrobe, locker, accessibility, images and individual and double beds as associative array (int: boolean).
 
 GuestListService: Given a booking uuid returns a list of guest info that contains uuid, name, lastname, phone, email. If the requester it is an user then pass without ACL else check if provider did booking.
 
@@ -124,7 +124,7 @@ PaymentListService: Returns a list of payments info that contains uuid, paymentM
 
 PaymentInfoService: Returns a payments info that contains uuid, paymentMethod, amount and createdAt.
 
-AddRoomService: Given a booleans as tv, accesibility, heating, air conditioning, wc, shower, wardrobe, locker, individual and double price, individual and double beds and images.
+AddRoomService: Given a booleans as tv, accessibility, heating, air conditioning, wc, shower, wardrobe, locker, individual and double price, individual and double beds and images.
 
 RemoveRoomService: Given a room uuid.
 

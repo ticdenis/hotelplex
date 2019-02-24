@@ -6,19 +6,20 @@ namespace HotelPlex\Application\Service\Provider;
 
 use HotelPlex\Application\Service\Request;
 use HotelPlex\Domain\Entity\Provider\ProviderEmail;
+use HotelPlex\Domain\Entity\Provider\ProviderId;
 use HotelPlex\Domain\Entity\Provider\ProviderPassword;
-use HotelPlex\Domain\ValueObject\UuidValueObject;
+use HotelPlex\Domain\Entity\Provider\ProviderUsername;
 use Tasky\Domain\Model\Provider\ProviderInvalidEmailException;
 
 final class ProviderRegisterRequest implements Request
 {
     /**
-     * @var UuidValueObject
+     * @var ProviderId
      */
     private $uuid;
 
     /**
-     * @var string
+     * @var ProviderUsername
      */
     private $username;
 
@@ -33,7 +34,6 @@ final class ProviderRegisterRequest implements Request
     private $password;
 
     /**
-     * ProviderRegisterRequest constructor.
      * @param string $uuid
      * @param string $username
      * @param string $email
@@ -47,24 +47,24 @@ final class ProviderRegisterRequest implements Request
         string $password
     )
     {
-        $this->uuid = new UuidValueObject($uuid);
-        $this->username = $username;
+        $this->uuid = new ProviderId($uuid);
+        $this->username = new ProviderUsername($username);
         $this->email = new ProviderEmail($email);
         $this->password = new ProviderPassword($password);
     }
 
     /**
-     * @return UuidValueObject
+     * @return ProviderId
      */
-    public function uuid(): UuidValueObject
+    public function uuid(): ProviderId
     {
         return $this->uuid;
     }
 
     /**
-     * @return string
+     * @return ProviderUsername
      */
-    public function username(): string
+    public function username(): ProviderUsername
     {
         return $this->username;
     }

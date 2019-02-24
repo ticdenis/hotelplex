@@ -45,5 +45,4 @@ final class TokenPostController extends BaseController
             ], $exception->getCode());
         }
     }
-
 }

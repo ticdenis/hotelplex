@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HotelPlex\Infrastructure\Presenter;
+namespace HotelPlex\Infrastructure\Presenter\Hotel;
 
 use HotelPlex\Application\Presenter\Hotel\HotelPresenter;
 

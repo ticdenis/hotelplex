@@ -5,6 +5,9 @@ services:
   hotelplex.mapper.hotel:
     class: HotelPlex\Infrastructure\Mapper\Hotel\AutoMapperPlusHotelMapper
 
+  hotelplex.mapper.payment:
+    class: HotelPlex\Infrastructure\Mapper\Payment\AutoMapperPlusPaymentMapper
+
   hotelplex.mapper.user:
     class: HotelPlex\Infrastructure\Mapper\User\AutoMapperPlusUserMapper
 

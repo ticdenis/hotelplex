@@ -19,3 +19,6 @@ Query:
       hotelList:
         type: "[Hotel!]!"
         resolve: '@=resolver("App\\GraphQL\\Hotel\\HotelListResolver", [args])'
+      paymentList:
+        type: "[Payment!]!"
+        resolve: '@=resolver("App\\GraphQL\\Payment\\PaymentListResolver", [args])'
