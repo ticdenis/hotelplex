@@ -12,3 +12,8 @@ payment_list_get_controller:
   path: /payments
   methods: [GET]
   controller: App\Controller\Payment\PaymentListGetController
+
+payment_info_get_controller:
+  path: /payments/{uuid}
+  methods: [GET]
+  controller: App\Controller\Payment\PaymentInfoGetController
