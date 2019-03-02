@@ -23,35 +23,47 @@ class DateTimeValueObject extends ValueObject
     /**
      * @param string $value
      * @param DateTimeZone|null $timezone
-     * @return DateTimeValueObject
+     * @return self
      */
-    public static function fromString(string $value, $timezone = null): DateTimeValueObject
+    public static function fromString(string $value, $timezone = null): self
     {
+        /**
+         * @var DateTimeValueObject $class
+         */
+        $class = get_called_class();
         /** @noinspection PhpUnhandledExceptionInspection */
-        return new self(new DateTimeImmutable($value, $timezone));
+        return new $class(new DateTimeImmutable($value, $timezone));
     }
 
     /** @noinspection PhpDocMissingThrowsInspection */
     /**
      * @param int $value
      * @param DateTimeZone|null $timezone
-     * @return DateTimeValueObject
+     * @return self
      */
-    public static function fromInt(int $value, $timezone = null): DateTimeValueObject
+    public static function fromInt(int $value, $timezone = null): self
     {
+        /**
+         * @var DateTimeValueObject $class
+         */
+        $class = get_called_class();
         /** @noinspection PhpUnhandledExceptionInspection */
-        return new self((new DateTimeImmutable('now', $timezone))->setTimestamp($value));
+        return new $class((new DateTimeImmutable('now', $timezone))->setTimestamp($value));
     }
 
     /** @noinspection PhpDocMissingThrowsInspection */
     /**
      * @param DateTimeZone|null $timezone
-     * @return DateTimeValueObject
+     * @return self
      */
-    public static function now(DateTimeZone $timezone = null): DateTimeValueObject
+    public static function now(DateTimeZone $timezone = null): self
     {
+        /**
+         * @var DateTimeValueObject $class
+         */
+        $class = get_called_class();
         /** @noinspection PhpUnhandledExceptionInspection */
-        return new self(new DateTimeImmutable('now', $timezone));
+        return new $class(new DateTimeImmutable('now', $timezone));
     }
 
     /** @noinspection PhpDocMissingThrowsInspection */
@@ -61,15 +73,20 @@ class DateTimeValueObject extends ValueObject
      * @param string $type
      * @return DateTimeValueObject
      */
-    public static function nowModify($value, string $type, DateTimeZone $timezone = null): DateTimeValueObject
+    public static function nowModify($value, string $type, DateTimeZone $timezone = null): self
     {
-        $datetime = self::now($timezone)->value();
+        /**
+         * @var DateTimeValueObject $class
+         */
+        $class = get_called_class();
+
+        $datetime = $class::now($timezone)->value();
         /** @noinspection PhpUnhandledExceptionInspection */
         $datetime = new DateTime($datetime->format('Y-m-d H:i:s'), $datetime->getTimezone());
 
         $datetime->modify($value . ' ' . $type);
 
-        return self::fromInt($datetime->getTimestamp(), $datetime->getTimezone());
+        return $class::fromInt($datetime->getTimestamp(), $datetime->getTimezone());
     }
 
     /**
