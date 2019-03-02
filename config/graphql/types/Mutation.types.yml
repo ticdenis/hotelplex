@@ -14,3 +14,17 @@ Mutation:
           password:
             type: "String!"
         resolve: '@=resolver("App\\GraphQL\\Provider\\RegisterProviderResolver", [args])'
+      registerUser:
+        type: "Boolean!"
+        args:
+          uuid:
+            type: "String!"
+          username:
+            type: "String!"
+          email:
+            type: "String!"
+          password:
+            type: "String!"
+          hotels:
+            type: "String!"
+        resolve: '@=resolver("App\\GraphQL\\User\\RegisterUserResolver", [args])'

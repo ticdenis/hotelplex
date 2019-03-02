@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace HotelPlex\Domain\Entity\User;
 
+use HotelPlex\Domain\Event\DomainEventPublisher;
+use HotelPlex\Domain\Event\User\UserRegistered;
+
 final class User
 {
     /**
@@ -51,6 +54,36 @@ final class User
         $this->email = $email;
         $this->password = $password;
         $this->hotels = $hotels;
+    }
+
+    /**
+     * @param UserId $uuid
+     * @param UserUsername $username
+     * @param UserEmail $email
+     * @param UserPassword $password
+     * @param UserHotels $hotels
+     * @return User
+     */
+    public static function register(
+        UserId $uuid,
+        UserUsername $username,
+        UserEmail $email,
+        UserPassword $password,
+        UserHotels $hotels
+    ): self
+    {
+        $user = new self($uuid, $username, $email, $password, $hotels);
+
+        DomainEventPublisher::instance()->publish(
+            new UserRegistered(
+                $uuid->value(),
+                $username->value(),
+                $email->value(),
+                $hotels->value()
+            )
+        );
+
+        return $user;
     }
 
     /**

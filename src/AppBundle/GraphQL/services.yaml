@@ -14,7 +14,7 @@ services:
     arguments:
       - '@service_container'
 
-  App\GraphQL\Hotel\HotelsResolver:
+  App\GraphQL\Hotel\HotelListResolver:
     arguments:
       - '@service_container'
 
@@ -22,4 +22,8 @@ services:
 
   App\GraphQL\Provider\RegisterProviderResolver:
     arguments:
-    - '@service_container'
+      - '@service_container'
+
+  App\GraphQL\User\RegisterUserResolver:
+    arguments:
+      - '@service_container'

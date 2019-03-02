@@ -20,7 +20,7 @@ class HotelListResolver extends BaseResolver
     public function resolve(Argument $args)
     {
         return (new HotelListService(
-            $this->container->get('hotelplex.repository.hotel')
+            $this->container->get('hotelplex.query-repository.hotel')
         ))(
             new EmptyRequest(),
             new ArrayHotelListPresenter(new ArrayHotelPresenter())

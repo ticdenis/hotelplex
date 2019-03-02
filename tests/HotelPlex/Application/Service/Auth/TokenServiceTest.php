@@ -18,8 +18,6 @@ use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerProviderFactory;
 use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerUserFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Tasky\Domain\Model\Provider\ProviderInvalidEmailException;
-use Tasky\Domain\Model\User\UserInvalidEmailException;
 
 final class TokenServiceTest extends TestCase
 {
@@ -62,8 +60,6 @@ final class TokenServiceTest extends TestCase
 
     /**
      * @throws UserHotelsException
-     * @throws ProviderInvalidEmailException
-     * @throws UserInvalidEmailException
      */
     protected function setUp()
     {

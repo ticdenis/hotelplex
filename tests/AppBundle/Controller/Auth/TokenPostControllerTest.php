@@ -7,6 +7,7 @@ namespace App\Controller\Auth;
 use HotelPlex\Domain\Entity\Provider\Provider;
 use HotelPlex\Domain\Entity\User\User;
 use HotelPlex\Domain\Entity\User\UserHotelsException;
+use HotelPlex\Domain\Exception\User\UserInvalidEmailException;
 use HotelPlex\Domain\Factory\Auth\TokenFactory;
 use HotelPlex\Domain\Repository\Provider\ProviderQueryRepository;
 use HotelPlex\Domain\Repository\User\UserQueryRepository;
@@ -17,8 +18,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Tasky\Domain\Model\Provider\ProviderInvalidEmailException;
-use Tasky\Domain\Model\User\UserInvalidEmailException;
 
 final class TokenPostControllerTest extends TestCase
 {
@@ -45,7 +44,6 @@ final class TokenPostControllerTest extends TestCase
 
     /**
      * @throws UserHotelsException
-     * @throws ProviderInvalidEmailException
      * @throws UserInvalidEmailException
      */
     protected function setUp()
@@ -65,8 +63,8 @@ final class TokenPostControllerTest extends TestCase
         // Arrange
         $container = new Container();
         $this->mockUserRepository->method('ofEmailAndPassword')->willReturn($this->mockUser);
-        $container->set('hotelplex.repository.user', $this->mockUserRepository);
-        $container->set('hotelplex.repository.provider', $this->mockProviderRepository);
+        $container->set('hotelplex.query-repository.user', $this->mockUserRepository);
+        $container->set('hotelplex.query-repository.provider', $this->mockProviderRepository);
         $controller = new TokenPostController($container);
         $request = new Request([], [
             'email' => $this->mockUser->email()->value(),
@@ -87,9 +85,9 @@ final class TokenPostControllerTest extends TestCase
     {
         // Arrange
         $container = new Container();
-        $container->set('hotelplex.repository.user', $this->mockUserRepository);
+        $container->set('hotelplex.query-repository.user', $this->mockUserRepository);
         $this->mockProviderRepository->method('ofEmailAndPassword')->willReturn($this->mockProvider);
-        $container->set('hotelplex.repository.provider', $this->mockProviderRepository);
+        $container->set('hotelplex.query-repository.provider', $this->mockProviderRepository);
         $controller = new TokenPostController($container);
         $request = new Request([], [
             'email' => $this->mockProvider->email()->value(),
@@ -110,8 +108,8 @@ final class TokenPostControllerTest extends TestCase
     {
         // Arrange
         $container = new Container();
-        $container->set('hotelplex.repository.user', $this->mockUserRepository);
-        $container->set('hotelplex.repository.provider', $this->mockProviderRepository);
+        $container->set('hotelplex.query-repository.user', $this->mockUserRepository);
+        $container->set('hotelplex.query-repository.provider', $this->mockProviderRepository);
         $controller = new TokenPostController($container);
         $request = new Request([], [
             'email' => 'test@hotelplex.com',

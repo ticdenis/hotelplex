@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace HotelPlex\Domain\Entity\User;
 
+use HotelPlex\Domain\Exception\User\UserInvalidEmailException;
 use HotelPlex\Domain\ValueObject\StringValueObject;
-use Tasky\Domain\Model\User\UserInvalidEmailException;
 
 final class UserEmail extends StringValueObject
 {

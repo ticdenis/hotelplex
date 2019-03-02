@@ -42,8 +42,8 @@ class TokenResolver extends BaseResolver
         }
 
         return (new TokenService(
-            $this->container->get('hotelplex.repository.user'),
-            $this->container->get('hotelplex.repository.provider'),
+            $this->container->get('hotelplex.query-repository.user'),
+            $this->container->get('hotelplex.query-repository.provider'),
             new ReallySimpleTokenFactory(
                 getenv('TOKEN_SECRET'),
                 DateTimeValueObject::nowModify(getenv('TOKEN_EXPIRATION_DAYS'), 'days')->value()->getTimestamp()

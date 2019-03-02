@@ -39,7 +39,7 @@ class HotelResolverTest extends TestCase
         // Arrange
         $container = new Container();
         $this->mockHotelRepository->method('ofIdOrFail')->willReturn($this->mockHotel);
-        $container->set('hotelplex.repository.hotel', $this->mockHotelRepository);
+        $container->set('hotelplex.query-repository.hotel', $this->mockHotelRepository);
         $resolver = new HotelResolver($container);
         $args = new Argument([
             'uuid' => $this->mockHotel->uuid()->value()
@@ -68,7 +68,7 @@ class HotelResolverTest extends TestCase
         $this->mockHotelRepository->method('ofIdOrFail')->willThrowException(
             HotelNotFoundException::withUUID($uuid)
         );
-        $container->set('hotelplex.repository.hotel', $this->mockHotelRepository);
+        $container->set('hotelplex.query-repository.hotel', $this->mockHotelRepository);
         $resolver = new HotelResolver($container);
         $args = new Argument([
             'uuid' => $uuid

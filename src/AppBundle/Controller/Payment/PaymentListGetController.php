@@ -23,7 +23,7 @@ final class PaymentListGetController extends BaseController
     {
         try {
             return new JsonResponse((new PaymentListService(
-                $this->container->get('hotelplex.repository.payment')
+                $this->container->get('hotelplex.query-repository.payment')
             ))(
                 new EmptyRequest(),
                 new ArrayPaymentListPresenter(new ArrayPaymentPresenter())

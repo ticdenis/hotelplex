@@ -82,15 +82,15 @@ payment
 
 ........PUBLIC...........
 
-RegisterProviderService: Given an username, email, password return an empty response.
+~~RegisterProviderService: Given an username, email, password return an empty response.~~
 
-TokenService: Given an username and password correctly returns a JWT with 14 days of expiration.
+~~TokenService: Given an username and password correctly returns a JWT with 14 days of expiration.~~
 
 ........PROTECTED...........
 
-HotelsInfoService: Returns a list of hotels info that contains uuid, name, address, phone, email, lift, wifi, parking, kitchen, payment methods, pets, logo and images.
+~~HotelsInfoService: Returns a list of hotels info that contains uuid, name, address, phone, email, lift, wifi, parking, kitchen, payment methods, pets, logo and images.~~
 
-HotelInfoService: Given an uuid returns the hotel info that contains: uuid, name, address, phone, email, lift, wifi, parking, kitchen, payment methods, pets, logo and images.
+~~HotelInfoService: Given an uuid returns the hotel info that contains: uuid, name, address, phone, email, lift, wifi, parking, kitchen, payment methods, pets, logo and images.~~
 
 BookingService: Given a customer (uuid, name, lastname, phone, email), a hotel (uuid) and the single and/or double beds (ids) of a room (uuid) the guests who will occupy the beds (uuid, name, lastname, phone, email), the date and time of check in and check out, final price (float) and payment (uuid) and returns the booking uuid if pass the three validations correctly.
 
@@ -118,11 +118,11 @@ RemoveAdditionalGuestService: Given a booking uuid and guest uuid. Only can remo
 
 ........PRIVATE...........
 
-RegisterUserService: Given an username, email, password and his hotels assigned return an empty response.
+~~̶R̶e̶g̶i̶s̶t̶e̶r̶U̶s̶e̶r̶S̶e̶r̶v̶i̶c̶e̶:̶ ̶G̶i̶v̶e̶n̶ ̶a̶n̶ ̶u̶s̶e̶r̶n̶a̶m̶e̶,̶ ̶e̶m̶a̶i̶l̶,̶ ̶p̶a̶s̶s̶w̶o̶r̶d̶ ̶a̶n̶d̶ ̶h̶i̶s̶ ̶h̶o̶t̶e̶l̶s̶ ̶a̶s̶s̶i̶g̶n̶e̶d̶ ̶r̶e̶t̶u̶r̶n̶ ̶a̶n̶ ̶e̶m̶p̶t̶y̶ ̶r̶e̶s̶p̶o̶n̶s̶e̶.~~
 
-PaymentListService: Returns a list of payments info that contains uuid, paymentMethod, amount and createdAt.
+~~PaymentListService: Returns a list of payments info that contains uuid, paymentMethod, amount and createdAt.~~
 
-PaymentInfoService: Returns a payments info that contains uuid, paymentMethod, amount and createdAt.
+PaymentInfoService: Given an uuid returns a payments info that contains uuid, paymentMethod, amount and createdAt.
 
 AddRoomService: Given a booleans as tv, accessibility, heating, air conditioning, wc, shower, wardrobe, locker, individual and double price, individual and double beds and images.
 

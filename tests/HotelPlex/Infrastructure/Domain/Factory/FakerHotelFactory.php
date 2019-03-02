@@ -8,7 +8,6 @@ use Faker\Factory;
 use Faker\Generator;
 use HotelPlex\Domain\Entity\Hotel\Hotel;
 use HotelPlex\Domain\Factory\Hotel\HotelFactory;
-use HotelPlex\Domain\ValueObject\DateTimeValueObject;
 use HotelPlex\Domain\ValueObject\UuidValueObject;
 
 class FakerHotelFactory implements HotelFactory
@@ -64,9 +63,7 @@ class FakerHotelFactory implements HotelFactory
             $params['images'] ?? $this->faker->randomElement([
                 [],
                 [$this->faker->imageUrl(), $this->faker->imageUrl(), $this->faker->imageUrl()]
-            ]),
-            $params['createdAt'] ?? new DateTimeValueObject($this->faker->dateTime),
-            $params['updatedAt'] ?? new DateTimeValueObject($this->faker->dateTime)
+            ])
         );
     }
 }
