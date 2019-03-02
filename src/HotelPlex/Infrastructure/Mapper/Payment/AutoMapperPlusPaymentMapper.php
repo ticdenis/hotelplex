@@ -12,6 +12,7 @@ use HotelPlex\Domain\Entity\Payment\PaymentAmount;
 use HotelPlex\Domain\Entity\Payment\PaymentCreatedAt;
 use HotelPlex\Domain\Entity\Payment\PaymentId;
 use HotelPlex\Domain\Entity\Payment\PaymentMethod;
+use HotelPlex\Domain\ValueObject\DateTimeValueObject;
 use stdClass;
 
 class AutoMapperPlusPaymentMapper extends PaymentMapper
@@ -57,7 +58,7 @@ class AutoMapperPlusPaymentMapper extends PaymentMapper
 
         $config->registerMapping(stdClass::class, $this->entity())
             ->forMember('uuid', function ($item) {
-                return new PaymentId($item->uuid ?? $item->id);
+                return new PaymentId($item->uuid);
             })
             ->forMember('paymentMethod', function ($item) {
                 return new PaymentMethod($item->payment_method);
@@ -67,11 +68,11 @@ class AutoMapperPlusPaymentMapper extends PaymentMapper
             })
             ->forMember('createdAt', function ($item) {
                 if (!isset($item->created_at)) {
-                    return PaymentCreatedAt::now();
+                    return new PaymentCreatedAt(DateTimeValueObject::now()->value());
                 } else if (($timestamp = (int)$item->created_at) !== 0) {
-                    return PaymentCreatedAt::fromInt($timestamp);
+                    return new PaymentCreatedAt(DateTimeValueObject::fromInt($timestamp)->value());
                 } else {
-                    return PaymentCreatedAt::fromString($item->created_at);
+                    return new PaymentCreatedAt(DateTimeValueObject::fromString($item->created_at)->value());
                 }
             });
 

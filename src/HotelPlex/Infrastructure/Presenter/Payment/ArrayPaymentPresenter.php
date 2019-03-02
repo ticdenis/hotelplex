@@ -17,7 +17,7 @@ class ArrayPaymentPresenter extends PaymentPresenter
     {
         return [
             'uuid' => $this->payment->uuid()->value(),
-            'method' => $this->payment->paymentMethod(),
+            'method' => $this->payment->paymentMethod()->value(),
             'currency' => $this->payment->amount()->currency(),
             'price' => $this->payment->amount()->price(),
             'createdAt' => $this->payment->createdAt()->value()->format(self::DATE_FORMAT)

@@ -23,3 +23,9 @@ services:
   App\GraphQL\Provider\RegisterProviderResolver:
     arguments:
     - '@service_container'
+
+  # Payment
+
+  App\GraphQL\Payment\PaymentInfoResolver:
+    arguments:
+    - '@service_container'

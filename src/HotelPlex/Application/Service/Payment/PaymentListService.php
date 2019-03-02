@@ -31,8 +31,8 @@ class PaymentListService implements Service
      */
     public function __invoke($request, $presenter): PaymentListPresenter
     {
-        $hotels = $this->repository->all();
+        $payments = $this->repository->all();
 
-        return $presenter->write($hotels);
+        return $presenter->write($payments);
     }
 }

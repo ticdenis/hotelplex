@@ -22,3 +22,9 @@ Query:
       paymentList:
         type: "[Payment!]!"
         resolve: '@=resolver("App\\GraphQL\\Payment\\PaymentListResolver", [args])'
+      paymentInfo:
+        type: "[Payment!]!"
+        args:
+          uuid:
+            type: "String!"
+        resolve: '@=resolver("App\\GraphQL\\Payment\\PaymentInfoResolver", [args])'
