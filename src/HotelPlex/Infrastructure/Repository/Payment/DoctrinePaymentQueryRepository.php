@@ -22,6 +22,10 @@ final class DoctrinePaymentQueryRepository extends DoctrineBaseRepository implem
      */
     private $paymentMapper;
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param PaymentMapper $paymentMapper
+     */
     public function __construct(EntityManagerInterface $entityManager, PaymentMapper $paymentMapper)
     {
         parent::__construct($entityManager);

@@ -61,12 +61,4 @@ class ProviderRegistered extends ProviderDomainEvent
     {
         return $this->email;
     }
-
-    /**
-     * @return mixed
-     */
-    public function jsonSerialize()
-    {
-        return get_object_vars($this);
-    }
 }

@@ -23,6 +23,10 @@ class DoctrineUserQueryRepository extends DoctrineBaseRepository implements User
      */
     private $userMapper;
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param UserMapper $userMapper
+     */
     public function __construct(EntityManagerInterface $entityManager, UserMapper $userMapper)
     {
         parent::__construct($entityManager);
