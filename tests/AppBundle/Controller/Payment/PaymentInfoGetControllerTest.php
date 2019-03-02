@@ -34,7 +34,7 @@ final class PaymentInfoGetControllerTest extends TestCase
     /**
      * @test
      */
-    public function shouldReturnAPaymentListAndOKHTTPCode()
+        public function shouldReturnAPaymenInfoGivenAnUuidAndOKHTTPCode()
     {
         // Arrange
         $container = new Container();

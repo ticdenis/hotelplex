@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Auth;
 
+use App\Tests\Listener\SpyExceptionListener;
 use HotelPlex\Domain\Entity\Provider\Provider;
 use HotelPlex\Domain\Entity\User\User;
 use HotelPlex\Domain\Entity\User\UserHotelsException;
@@ -116,7 +117,9 @@ final class TokenPostControllerTest extends TestCase
             'password' => 'secret'
         ]);
         // Action
-        $response = $controller->__invoke($request);
+        $response = SpyExceptionListener::execute(function () use ($controller, $request) {
+            return $controller->__invoke($request);
+        });
         // Assert
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertSame(JsonResponse::HTTP_UNAUTHORIZED, $response->getStatusCode());

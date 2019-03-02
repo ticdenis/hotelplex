@@ -122,7 +122,7 @@ RemoveAdditionalGuestService: Given a booking uuid and guest uuid. Only can remo
 
 ~~PaymentListService: Returns a list of payments info that contains uuid, paymentMethod, amount and createdAt.~~
 
-PaymentInfoService: Given an uuid returns a payments info that contains uuid, paymentMethod, amount and createdAt.
+~~PaymentInfoService: Given an uuid returns a payments info that contains uuid, paymentMethod, amount and createdAt.~~
 
 AddRoomService: Given a booleans as tv, accessibility, heating, air conditioning, wc, shower, wardrobe, locker, individual and double price, individual and double beds and images.
 
