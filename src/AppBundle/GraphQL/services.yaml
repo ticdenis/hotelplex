@@ -24,6 +24,8 @@ services:
     arguments:
       - '@service_container'
 
+  # User
+
   App\GraphQL\User\RegisterUserResolver:
     arguments:
     - '@service_container'
