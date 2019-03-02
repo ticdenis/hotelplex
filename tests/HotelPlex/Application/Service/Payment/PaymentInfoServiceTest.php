@@ -50,8 +50,6 @@ final class PaymentInfoServiceTest extends TestCase
         $this->presenter = new ArrayPaymentPresenter();
     }
 
-
-
     /**
      * @test
      * @throws PaymentNotFoundException
