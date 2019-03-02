@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace HotelPlex\Application\Service\Payment;
 
-use HotelPlex\Application\Presenter\Payment\PaymentInfoPresenter;
 use HotelPlex\Application\Presenter\Payment\PaymentPresenter;
 use HotelPlex\Application\Service\Service;
 use HotelPlex\Domain\Exception\Payment\PaymentNotFoundException;
 use HotelPlex\Domain\Repository\Payment\PaymentQueryRepository;
-use HotelPlex\Infrastructure\Presenter\Payment\ArrayPaymentPresenter;
 
 class PaymentInfoService implements Service
 {
@@ -37,7 +35,7 @@ class PaymentInfoService implements Service
         $payment = $this->repository->ofId($request->uuid());
 
         if ($payment === null) {
-            throw new PaymentNotFoundException($request->uuid()->value());
+            throw PaymentNotFoundException::withUUID($request->uuid()->value());
         }
 
         return $presenter->write($payment);
