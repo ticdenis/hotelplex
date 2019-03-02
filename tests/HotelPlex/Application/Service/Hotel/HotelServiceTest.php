@@ -46,7 +46,7 @@ class HotelServiceTest extends TestCase
     public function shouldReturnAHotelInfoPresenter()
     {
         // Arrange
-        $this->mockRepository->method('ofIdOrFail')->willReturn($this->mockHotel);
+        $this->mockRepository->method('ofId')->willReturn($this->mockHotel);
         $this->mockPresenter->method('read')->willReturn($this->mockHotel);
         $service = new HotelService($this->mockRepository);
         $this->mockRequest->method('uuid')->willReturn($this->mockHotel->uuid());
@@ -64,9 +64,7 @@ class HotelServiceTest extends TestCase
     public function shouldThrowAHotelNotFoundException()
     {
         // Arrange
-        $this->mockRepository->method('ofIdOrFail')->willThrowException(
-            HotelNotFoundException::withUUID($this->mockHotel->uuid()->value())
-        );
+        $this->mockRepository->method('ofId')->willReturn(null);
         $service = new HotelService($this->mockRepository);
         // Assert
         $this->expectException(HotelNotFoundException::class);

@@ -7,7 +7,6 @@ namespace HotelPlex\Infrastructure\Repository\Hotel;
 use Doctrine\ORM\EntityManagerInterface;
 use HotelPlex\Application\Mapper\Hotel\HotelMapper;
 use HotelPlex\Domain\Entity\Hotel\Hotel;
-use HotelPlex\Domain\Exception\Hotel\HotelNotFoundException;
 use HotelPlex\Domain\Repository\Hotel\HotelQueryRepository;
 use HotelPlex\Domain\ValueObject\UuidValueObject;
 use HotelPlex\Infrastructure\Repository\DoctrineBaseRepository;
@@ -50,10 +49,9 @@ final class DoctrineHotelQueryRepository extends DoctrineBaseRepository implemen
 
     /**
      * @param UuidValueObject $uuid
-     * @return Hotel
-     * @throws HotelNotFoundException
+     * @return Hotel|null
      */
-    public function ofIdOrFail(UuidValueObject $uuid): Hotel
+    public function ofId(UuidValueObject $uuid): ?Hotel
     {
         $item = $this->connection->createQueryBuilder()
             ->select('*')
@@ -64,10 +62,6 @@ final class DoctrineHotelQueryRepository extends DoctrineBaseRepository implemen
             ->execute()
             ->fetch();
 
-        if (!$item) {
-            throw HotelNotFoundException::withUUID($uuid->value());
-        }
-
-        return $this->hotelMapper->item($item);
+        return $item ? $this->hotelMapper->item($item) : null;
     }
 }

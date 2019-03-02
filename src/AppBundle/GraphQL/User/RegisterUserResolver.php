@@ -23,6 +23,7 @@ class RegisterUserResolver extends BaseResolver
     public function resolve(Argument $args)
     {
         (new RegisterUserService(
+            $this->container->get('hotelplex.query-repository.hotel'),
             $this->container->get('hotelplex.command-repository.user')
         ))(
             new RegisterUserRequest(

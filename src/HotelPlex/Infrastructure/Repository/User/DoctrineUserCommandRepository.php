@@ -36,7 +36,7 @@ class DoctrineUserCommandRepository extends DoctrineBaseRepository implements Us
             'username' => $user->username()->value(),
             'email' => $user->email()->value(),
             'password' => $user->password()->value(),
-            'hotels' => join(',', $user->hotels()->value()), // TODO: Check Hotel UUID exists!
+            'hotels' => join(',', $user->hotels()->value()),
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ]);

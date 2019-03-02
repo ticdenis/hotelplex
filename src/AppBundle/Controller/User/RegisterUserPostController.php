@@ -24,6 +24,7 @@ final class RegisterUserPostController extends BaseController
     public function __invoke(Request $request): JsonResponse
     {
         (new RegisterUserService(
+            $this->container->get('hotelplex.query-repository.hotel'),
             $this->container->get('hotelplex.command-repository.user')
         ))(
             new RegisterUserRequest(

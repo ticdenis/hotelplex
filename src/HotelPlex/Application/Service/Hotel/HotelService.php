@@ -32,7 +32,11 @@ class HotelService implements Service
      */
     public function __invoke($request, $presenter): HotelPresenter
     {
-        $hotel = $this->repository->ofIdOrFail($request->uuid());
+        $hotel = $this->repository->ofId($request->uuid());
+
+        if ($hotel === null) {
+            throw HotelNotFoundException::withUUID($request->uuid()->value());
+        }
 
         return $presenter->write($hotel);
     }

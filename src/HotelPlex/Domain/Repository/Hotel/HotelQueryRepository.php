@@ -20,5 +20,5 @@ interface HotelQueryRepository
      * @return Hotel
      * @throws HotelNotFoundException
      */
-    public function ofIdOrFail(UuidValueObject $uuid): Hotel;
+    public function ofId(UuidValueObject $uuid): ?Hotel;
 }
