@@ -11,7 +11,6 @@ use HotelPlex\Domain\Entity\Provider\Provider;
 use HotelPlex\Domain\Entity\Provider\ProviderEmail;
 use HotelPlex\Domain\Entity\Provider\ProviderId;
 use HotelPlex\Domain\Entity\Provider\ProviderPassword;
-use HotelPlex\Domain\ValueObject\DateTimeValueObject;
 use stdClass;
 
 class AutoMapperPlusProviderMapper extends ProviderMapper
@@ -67,24 +66,6 @@ class AutoMapperPlusProviderMapper extends ProviderMapper
             })
             ->forMember('password', function ($item) {
                 return !isset($item->password) ? new ProviderPassword('test') : new ProviderPassword($item->password);
-            })
-            ->forMember('createdAt', function ($item) {
-                if (!isset($item->created_at)) {
-                    return DateTimeValueObject::now();
-                } else if (($timestamp = (int)$item->created_at) !== 0) {
-                    return DateTimeValueObject::fromInt($timestamp);
-                } else {
-                    return DateTimeValueObject::fromString($item->created_at);
-                }
-            })
-            ->forMember('updatedAt', function ($item) {
-                if (!isset($item->updated_at)) {
-                    return DateTimeValueObject::now();
-                } else if (($timestamp = (int)$item->updated_at) !== 0) {
-                    return DateTimeValueObject::fromInt($timestamp);
-                } else {
-                    return DateTimeValueObject::fromString($item->updated_at);
-                }
             });
 
         return $config;

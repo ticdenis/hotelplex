@@ -8,5 +8,4 @@ use HotelPlex\Domain\ValueObject\DateTimeValueObject;
 
 final class PaymentCreatedAt extends DateTimeValueObject
 {
-
 }

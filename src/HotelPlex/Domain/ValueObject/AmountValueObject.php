@@ -23,11 +23,12 @@ class AmountValueObject extends ArrayValueObject
 
     /**
      * @param float $price
-     * @return AmountValueObject
+     * @return self
      */
     public static function ofEUR(float $price): self
     {
-        return new self(self::CURRENCY_EUR, $price);
+        $class = get_called_class();
+        return new $class(self::CURRENCY_EUR, $price);
     }
 
     /**
@@ -36,7 +37,8 @@ class AmountValueObject extends ArrayValueObject
      */
     public static function ofUSD(float $price): self
     {
-        return new self(self::CURRENCY_USD, $price);
+        $class = get_called_class();
+        return new $class(self::CURRENCY_USD, $price);
     }
 
     /**
