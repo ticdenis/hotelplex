@@ -15,7 +15,7 @@ class UserInvalidEmailException extends DomainException
     public static function withEmail(string $email): self
     {
         return new self(sprintf(
-            'User email is invalid with "%s".',
+            'User email is invalid with {%s}.',
             $email
         ));
     }

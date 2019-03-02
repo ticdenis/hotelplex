@@ -15,7 +15,7 @@ class PaymentNotFoundException extends DomainException
     public static function withUUID(string $uuid): self
     {
         return new self(sprintf(
-            'Payment not fount with uuid "%s"',
+            'Payment not fount with uuid {%s}.',
             $uuid
         ), self::NOT_FOUND_CODE);
     }

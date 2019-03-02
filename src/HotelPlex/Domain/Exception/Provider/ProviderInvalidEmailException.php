@@ -15,7 +15,7 @@ class ProviderInvalidEmailException extends DomainException
     public static function withEmail(string $email): self
     {
         return new self(sprintf(
-            'Provider email is invalid with "%s".',
+            'Provider email is invalid with {%s}.',
             $email
         ));
     }

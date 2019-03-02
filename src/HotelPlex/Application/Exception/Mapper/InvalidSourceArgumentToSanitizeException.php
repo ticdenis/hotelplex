@@ -15,7 +15,7 @@ class InvalidSourceArgumentToSanitizeException extends ApplicationException
     public static function withSource($source): self
     {
         return new self(sprintf(
-         "Invalid source argument while sanitizing \n %s",
+         "Invalid source argument while sanitizing. \n %s",
             print_r($source, true)
         ));
     }

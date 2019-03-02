@@ -25,7 +25,7 @@ final class UserHotelsException extends DomainException
     public static function containsInvalidType(): self
     {
         return new self(sprintf(
-            'The array contains invalid type, expected string'
+            'The array contains invalid type, expected string.'
         ));
     }
 
