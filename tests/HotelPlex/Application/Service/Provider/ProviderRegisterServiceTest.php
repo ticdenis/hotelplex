@@ -14,7 +14,6 @@ use HotelPlex\Domain\Repository\Provider\ProviderCommandRepository;
 use HotelPlex\Tests\Infrastructure\Domain\Event\SpyDomainEventListener;
 use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerProviderFactory;
 use PHPUnit\Framework\TestCase;
-use Tasky\Domain\Model\Provider\ProviderInvalidEmailException;
 
 final class ProviderRegisterServiceTest extends TestCase
 {
@@ -28,10 +27,6 @@ final class ProviderRegisterServiceTest extends TestCase
      */
     private $request;
 
-    /**
-     *
-     * @throws ProviderInvalidEmailException
-     */
     protected function setUp()
     {
         $this->mockProvider = FakerProviderFactory::create();

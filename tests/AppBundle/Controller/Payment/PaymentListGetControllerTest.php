@@ -31,7 +31,7 @@ final class PaymentListGetControllerTest extends TestCase
         // Arrange
         $container = new Container();
         $this->mockPaymentRepository->method('all')->willReturn([]);
-        $container->set('hotelplex.repository.payment', $this->mockPaymentRepository);
+        $container->set('hotelplex.query-repository.payment', $this->mockPaymentRepository);
         $controller = new PaymentListGetController($container);
         // Action
         $response = $controller->__invoke(new Request());

@@ -13,8 +13,8 @@ use HotelPlex\Domain\Entity\User\UserHotelsException;
 use HotelPlex\Domain\Entity\User\UserId;
 use HotelPlex\Domain\Entity\User\UserPassword;
 use HotelPlex\Domain\Entity\User\UserUsername;
+use HotelPlex\Domain\Exception\User\UserInvalidEmailException;
 use HotelPlex\Domain\Factory\User\UserFactory;
-use Tasky\Domain\Model\User\UserInvalidEmailException;
 
 class FakerUserFactory implements UserFactory
 {

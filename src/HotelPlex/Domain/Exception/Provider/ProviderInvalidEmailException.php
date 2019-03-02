@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tasky\Domain\Model\Provider;
+namespace HotelPlex\Domain\Exception\Provider;
 
 use HotelPlex\Domain\Exception\DomainException;
 

@@ -6,9 +6,9 @@ namespace HotelPlex\Infrastructure\Repository\Provider;
 
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
-use HotelPlex\Application\Mapper\Provider\ProviderMapper;
 use HotelPlex\Domain\Entity\Provider\Provider;
 use HotelPlex\Domain\Repository\Provider\ProviderCommandRepository;
+use HotelPlex\Domain\ValueObject\DateTimeValueObject;
 use HotelPlex\Infrastructure\Repository\DoctrineBaseRepository;
 
 class DoctrineProviderCommandRepository extends DoctrineBaseRepository implements ProviderCommandRepository
@@ -19,39 +19,11 @@ class DoctrineProviderCommandRepository extends DoctrineBaseRepository implement
     private $providersTable = 'providers';
 
     /**
-     * @var ProviderMapper
-     */
-    private $providerMapper;
-
-    /**
      * @param EntityManagerInterface $entityManager
-     * @param ProviderMapper $providerMapper
      */
-    public function __construct(EntityManagerInterface $entityManager, ProviderMapper $providerMapper)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         parent::__construct($entityManager);
-        $this->providerMapper = $providerMapper;
-    }
-
-    /**
-     * @param string $email
-     * @param string $password
-     * @return Provider|null
-     */
-    public function ofEmailAndPassword(string $email, string $password): ?Provider
-    {
-        $item = $this->connection->createQueryBuilder()
-            ->select('*')
-            ->from($this->providersTable)
-            ->where('email = :email')
-            ->where('password = :password')
-            ->setParameter('email', $email)
-            ->setParameter('password', $password)
-            ->setMaxResults(1)
-            ->execute()
-            ->fetch();
-
-        return $item ? $this->providerMapper->item($item) : null;
     }
 
     /**
@@ -65,6 +37,8 @@ class DoctrineProviderCommandRepository extends DoctrineBaseRepository implement
             'username' => $provider->username()->value(),
             'email' => $provider->email()->value(),
             'password' => $provider->password()->value(),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
         ]);
     }
 }

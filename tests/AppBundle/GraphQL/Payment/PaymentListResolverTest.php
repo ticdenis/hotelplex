@@ -30,7 +30,7 @@ class PaymentListResolverTest extends TestCase
         // Arrange
         $container = new Container();
         $this->mockPaymentRepository->method('all')->willReturn([]);
-        $container->set('hotelplex.repository.payment', $this->mockPaymentRepository);
+        $container->set('hotelplex.query-repository.payment', $this->mockPaymentRepository);
         $resolver = new PaymentListResolver($container);
         // Action
         $response = $resolver->resolve(new Argument());
