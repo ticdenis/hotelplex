@@ -27,14 +27,14 @@ room
 	shower: boolean
 	wardrobe: boolean
 	locker: boolean
-	individualPrice: float
-	individualBeds: [int:bool]
-	doublePrice: float
+	accessibility: boolean
+	individualPrice: Amount
+	individualBeds: [int]:[bool]
+	doublePrice: Amount
 	doubleBeds: [int:bool]
-	accesibility: boolean
 	images: [string]
-	createdAt: Date
-	updatedAt: Date
+	..createdAt: Date
+	..updatedAt: Date
 
 booking
 	uuid: string

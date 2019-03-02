@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HotelPlex\Domain\Entity\Hotel;
+namespace HotelPlex\Domain\Entity\Hotel\Room;
 
 final class RoomFacilities
 {
@@ -39,6 +39,16 @@ final class RoomFacilities
      */
     private $accessibility;
 
+    /**
+     * @param RoomTv $tv
+     * @param RoomHeating $heating
+     * @param RoomAirConditioning $airConditioning
+     * @param RoomWc $roomWc
+     * @param RoomShower $shower
+     * @param RoomWardrobe $wardrobe
+     * @param RoomLocker $locker
+     * @param RoomAccessibility $accessibility
+     */
     public function __construct(
         RoomTv $tv,
         RoomHeating $heating,

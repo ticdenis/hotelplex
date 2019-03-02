@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HotelPlex\Domain\Entity\Hotel;
+namespace HotelPlex\Domain\Entity\Hotel\Room;
 
 use HotelPlex\Domain\Exception\Hotel\RoomBedException;
 use HotelPlex\Domain\ValueObject\ArrayValueObject;
@@ -43,5 +43,4 @@ abstract class RoomBeds extends ArrayValueObject
     {
         return count(array_diff($this->value, $other->value)) === 0;
     }
-
 }

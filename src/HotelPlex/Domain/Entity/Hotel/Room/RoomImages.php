@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HotelPlex\Domain\Entity\Hotel;
+namespace HotelPlex\Domain\Entity\Hotel\Room;
 
 use Exception;
 use HotelPlex\Domain\Exception\Hotel\RoomImagesException;

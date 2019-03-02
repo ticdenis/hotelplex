@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace HotelPlex\Domain\Entity\Hotel;
+namespace HotelPlex\Domain\Entity\Hotel\Room;
 
 final class Room
 {
-
     /**
      * @var RoomId
      */
@@ -36,6 +35,15 @@ final class Room
      */
     private $images;
 
+    /**
+     * @param RoomId $uuid
+     * @param RoomFacilities $facilities
+     * @param RoomIndividualPrice $individualPrice
+     * @param RoomIndividualBeds $individualBeds
+     * @param RoomDoublePrice $doublePrice
+     * @param RoomDoubleBeds $doubleBeds
+     * @param RoomImages $images
+     */
     public function __construct(
         RoomId $uuid,
         RoomFacilities $facilities,
