@@ -90,6 +90,14 @@ class DateTimeValueObject extends ValueObject
     }
 
     /**
+     * @return string
+     */
+    public function toUSFormat(): string
+    {
+        return $this->value->format('Y-m-d H:i:s');
+    }
+
+    /**
      * @return DateTimeInterface
      */
     public function value(): DateTimeInterface

@@ -8,8 +8,6 @@ use HotelPlex\Application\Presenter\Payment\PaymentPresenter;
 
 class ArrayPaymentPresenter extends PaymentPresenter
 {
-   const DATE_FORMAT = 'Y-m-d H:i:s';
-
     /**
      * @return mixed
      */
@@ -20,7 +18,7 @@ class ArrayPaymentPresenter extends PaymentPresenter
             'method' => $this->payment->paymentMethod()->value(),
             'currency' => $this->payment->amount()->currency(),
             'price' => $this->payment->amount()->price(),
-            'createdAt' => $this->payment->createdAt()->value()->format(self::DATE_FORMAT)
+            'createdAt' => $this->payment->createdAt()->toUSFormat()
         ];
     }
 }

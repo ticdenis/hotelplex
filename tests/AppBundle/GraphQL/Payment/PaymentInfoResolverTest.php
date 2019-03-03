@@ -4,32 +4,23 @@ declare(strict_types=1);
 
 namespace App\Tests\GraphQL\Payment;
 
-use App\GraphQL\Payment\PaymentInfoResolver;
-use HotelPlex\Domain\Entity\Payment\Payment;
+use App\Tests\GraphQL\GraphQLTestCase;
 use HotelPlex\Domain\Repository\Payment\PaymentQueryRepository;
 use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerPaymentFactory;
-use Overblog\GraphQLBundle\Definition\Argument;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\DependencyInjection\Container;
 
-final class PaymentInfoResolverTest extends TestCase
+final class PaymentInfoResolverTest extends GraphQLTestCase
 {
-    /**
-     * @var MockObject
-     */
-    private $mockPaymentRepository;
-
-    /**
-     * @var Payment
-     */
-    private $mockPayment;
-
-    protected function setUp()
-    {
-        $this->mockPaymentRepository = $this->createMock(PaymentQueryRepository::class);
-        $this->mockPayment = FakerPaymentFactory::create();
-    }
+    private const CUSTOM_QUERY = <<<'GRAPHQL'
+            query _($uuid: String!) {
+               paymentInfo(uuid: $uuid) {
+                   uuid
+                   method
+                   currency
+                   price
+                   createdAt
+               }
+            }
+GRAPHQL;
 
     /**
      * @test
@@ -37,16 +28,25 @@ final class PaymentInfoResolverTest extends TestCase
     public function shouldReturnAPayment()
     {
         // Arrange
-        $container = new Container();
-        $container->set('hotelplex.query-repository.payment', $this->mockPaymentRepository);
-        $this->mockPaymentRepository->method('ofId')->willReturn($this->mockPayment);
-        $resolver = new PaymentInfoResolver($container);
+        $payment = FakerPaymentFactory::create();
+        $mockRepository = $this->createMock(PaymentQueryRepository::class);
+        $mockRepository->method('all')->willReturn([$payment]);
+        $mockRepository->method('ofId')->willReturn($payment);
+        $this->client->getContainer()->set('hotelplex.query-repository.payment', $mockRepository);
+        $query = self::CUSTOM_QUERY;
+        $variables = [
+            'uuid' => $payment->uuid()->value()
+        ];
         // Action
-        $response = $resolver->resolve(
-            new Argument(['uuid' => $this->mockPayment->uuid()->value()])
-        );
+        $this->queryRequest($query, $variables);
         // Assert
-        $this->assertNotEmpty($response);
+        $this->graphqlAssert();
+        $this->assertArraySubset([
+            'uuid' => $payment->uuid()->value(),
+            'method' => $payment->paymentMethod()->value(),
+            'currency' => $payment->amount()->currency(),
+            'price' => $payment->amount()->price(),
+            'createdAt' => $payment->createdAt()->toUSFormat(),
+        ], $this->decodeJsonResponseAsArray()['paymentInfo']);
     }
-
 }
