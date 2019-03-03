@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
-use Doctrine\DBAL\Schema\ForeignKeyConstraint;
+use App\Migrations\Utils;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
@@ -16,52 +16,37 @@ final class Version20190303110830 extends AbstractMigration
     const TABLE_OLD = 'facilities';
     const TABLE_NEW = 'room_facilities';
 
-    const FULLPATH = __DIR__.'/tmp.txt';
-
-    /** @var ForeignKeyConstraint[] */
-    private $foreignKeys;
+    const FULL_PATH = __DIR__.'/tmp.txt';
 
     public function getDescription(): string
     {
         return 'alter_' . self::TABLE_NEW . '_table';
     }
 
+    /**
+     * @param Schema $schema
+     * @throws \Exception
+     */
     public function up(Schema $schema) : void
     {
-        $table = $schema->getTable(self::TABLE_NEW);
-        $data = file_get_contents(self::FULLPATH);
-        if (!$data) {
-            throw new \Exception('Error no write file');
-        }
-        $this->foreignKeys = unserialize($data);
-        \Lambdish\Phunctional\each(function (ForeignKeyConstraint $fk) use ($table) {
-            echo $fk->getName();
-            $table->addForeignKeyConstraint(
-                $fk->getForeignTableName(),
-                $fk->getLocalColumns(),
-                $fk->getForeignColumns(),
-                $fk->getOptions(),
-                $fk->getName()
-            );
-        }, $this->foreignKeys);
-        unlink(self::FULLPATH);
+        Utils::addFKWithRenameTableWithFK(
+            $schema,
+            self::TABLE_NEW,
+            self::FULL_PATH
+        );
     }
 
+    /**
+     * @param Schema $schema
+     * @throws \Doctrine\DBAL\Schema\SchemaException
+     */
     public function down(Schema $schema) : void
     {
-        $table = $schema->getTable(self::TABLE_NEW);
-
-        $this->foreignKeys = $table->getForeignKeys();
-
-        $file = file_put_contents(self::FULLPATH, serialize($this->foreignKeys));
-        if (!$file) {
-            throw new \Exception('Error no write file');
-        }
-
-        \Lambdish\Phunctional\each(function (ForeignKeyConstraint $fk) use ($table) {
-            $table->removeForeignKey($fk->getName());
-        }, $table->getForeignKeys());
-
-        $schema->renameTable(self::TABLE_NEW, self::TABLE_OLD);
+        Utils::renameTableWithFK(
+            $schema,
+            self::TABLE_NEW,
+            self::TABLE_OLD,
+            self::FULL_PATH
+        );
     }
 }
