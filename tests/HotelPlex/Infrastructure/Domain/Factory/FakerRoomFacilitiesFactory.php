@@ -55,7 +55,7 @@ class FakerRoomFacilitiesFactory implements RoomFacilitiesFactory
             $params['shower'] ?? new RoomShower($this->faker->boolean),
             $params['wardrobe'] ?? new RoomWardrobe($this->faker->boolean),
             $params['locker'] ?? new RoomLocker($this->faker->boolean),
-            $params['accessibility'] ?? new RoomAccessibility($this->faker->boolean),
+            $params['accessibility'] ?? new RoomAccessibility($this->faker->boolean)
         );
     }
 }
