@@ -1,19 +1,39 @@
+root_get_controller:
+  path: /
+  methods: [GET]
+  controller: App\Controller\RootGetController
+
 token_post_controller:
   path: /auth/token
   methods: [POST]
   controller: App\Controller\Auth\TokenPostController
 
-user_post_controller:
-  path: /users
-  methods: [POST]
-  controller: App\Controller\User\RegisterUserPostController
+hotel_get_controller:
+  path: /hotels/{uuid}
+  methods: [GET]
+  controller: App\Controller\Hotel\HotelGetController
+
+hotel_list_get_controller:
+  path: /hotels
+  methods: [GET]
+  controller: App\Controller\Hotel\HotelListGetController
+
+payment_info_get_controller:
+  path: /payments/{uuid}
+  methods: [GET]
+  controller: App\Controller\Payment\PaymentInfoGetController
 
 payment_list_get_controller:
   path: /payments
   methods: [GET]
   controller: App\Controller\Payment\PaymentListGetController
 
-payment_info_get_controller:
-  path: /payments/{uuid}
-  methods: [GET]
-  controller: App\Controller\Payment\PaymentInfoGetController
+provider_post_controller:
+  path: /providers
+  methods: [POST]
+  controller: App\Controller\Provider\RegisterProviderPostController
+
+user_post_controller:
+  path: /users
+  methods: [POST]
+  controller: App\Controller\User\RegisterUserPostController

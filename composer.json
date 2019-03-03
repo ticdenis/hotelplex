@@ -63,14 +63,8 @@
       "@test:hotelplex",
       "@test:app"
     ],
-    "test:app": [
-      "bin/console doctrine:database:drop --no-interaction --force --env=test",
-      "bin/console doctrine:database:create --if-not-exists --no-interaction  --env=test",
-      "bin/console doctrine:migrations:migrate --no-interaction --env=test",
-      "bin/console doctrine:fixtures:load --no-interaction --env=test",
-      "bin/phpunit --testsuite AppBundle"
-    ],
-    "test:hotelplex": "bin/phpunit --testsuite HotelPlex"
+    "test:app": "bin/phpunit --testsuite AppBundle -c phpunit-app.xml",
+    "test:hotelplex": "bin/phpunit --testsuite HotelPlex -c phpunit-hotelplex.xml"
   },
   "conflict": {
     "symfony/symfony": "*"
