@@ -11,6 +11,10 @@ final class Room
      */
     private $uuid;
     /**
+     * @var RoomCurrency
+     */
+    private $currency;
+    /**
      * @var RoomFacilities
      */
     private $facilities;
@@ -37,6 +41,7 @@ final class Room
 
     /**
      * @param RoomId $uuid
+     * @param RoomCurrency $currency
      * @param RoomFacilities $facilities
      * @param RoomIndividualPrice $individualPrice
      * @param RoomIndividualBeds $individualBeds
@@ -46,6 +51,7 @@ final class Room
      */
     public function __construct(
         RoomId $uuid,
+        RoomCurrency $currency,
         RoomFacilities $facilities,
         RoomIndividualPrice $individualPrice,
         RoomIndividualBeds $individualBeds,
@@ -55,6 +61,7 @@ final class Room
     )
     {
         $this->uuid = $uuid;
+        $this->currency = $currency;
         $this->facilities = $facilities;
         $this->individualPrice = $individualPrice;
         $this->individualBeds = $individualBeds;
@@ -69,6 +76,14 @@ final class Room
     public function uuid(): RoomId
     {
         return $this->uuid;
+    }
+
+    /**
+     * @return RoomCurrency
+     */
+    public function currency(): RoomCurrency
+    {
+        return $this->currency;
     }
 
     /**

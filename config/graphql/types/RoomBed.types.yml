@@ -1,0 +1,8 @@
+RoomBeed:
+  type: object
+  config:
+    fields:
+      key:
+        type: 'Int!'
+      value:
+        type: 'Boolean!'

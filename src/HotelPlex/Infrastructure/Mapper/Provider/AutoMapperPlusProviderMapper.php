@@ -4,53 +4,22 @@ declare(strict_types=1);
 
 namespace HotelPlex\Infrastructure\Mapper\Provider;
 
-use AutoMapperPlus\AutoMapper;
 use AutoMapperPlus\Configuration\AutoMapperConfig;
 use HotelPlex\Application\Mapper\Provider\ProviderMapper;
-use HotelPlex\Domain\Entity\Provider\Provider;
 use HotelPlex\Domain\Entity\Provider\ProviderEmail;
 use HotelPlex\Domain\Entity\Provider\ProviderId;
 use HotelPlex\Domain\Entity\Provider\ProviderPassword;
+use HotelPlex\Infrastructure\Mapper\AutoMapperPlusTrait;
 use stdClass;
 
 class AutoMapperPlusProviderMapper extends ProviderMapper
 {
-    /**
-     * @var AutoMapper
-     */
-    private $mapper;
-
-    public function __construct()
-    {
-        $this->mapper = new AutoMapper($this->config());
-    }
-
-    /** @noinspection PhpDocMissingThrowsInspection */
-    /**
-     * @param $source
-     * @return Provider
-     */
-    public function item($source)
-    {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $this->mapper->map($this->sanitize($source), $this->entity());
-    }
-
-    /** @noinspection PhpDocMissingThrowsInspection */
-    /**
-     * @param array $sources
-     * @return Provider[]
-     */
-    public function items(array $sources)
-    {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $this->mapper->mapMultiple($this->sanitize($sources), $this->entity());
-    }
+    use AutoMapperPlusTrait;
 
     /**
      * @return AutoMapperConfig
      */
-    private function config(): AutoMapperConfig
+    protected function config(): AutoMapperConfig
     {
         $config = new AutoMapperConfig();
 

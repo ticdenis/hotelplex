@@ -4,54 +4,23 @@ declare(strict_types=1);
 
 namespace HotelPlex\Infrastructure\Mapper\Payment;
 
-use AutoMapperPlus\AutoMapper;
 use AutoMapperPlus\Configuration\AutoMapperConfig;
 use HotelPlex\Application\Mapper\Payment\PaymentMapper;
-use HotelPlex\Domain\Entity\Payment\Payment;
 use HotelPlex\Domain\Entity\Payment\PaymentAmount;
 use HotelPlex\Domain\Entity\Payment\PaymentCreatedAt;
 use HotelPlex\Domain\Entity\Payment\PaymentId;
 use HotelPlex\Domain\Entity\Payment\PaymentMethod;
+use HotelPlex\Infrastructure\Mapper\AutoMapperPlusTrait;
 use stdClass;
 
 class AutoMapperPlusPaymentMapper extends PaymentMapper
 {
-    /**
-     * @var AutoMapper
-     */
-    private $mapper;
-
-    public function __construct()
-    {
-        $this->mapper = new AutoMapper($this->config());
-    }
-
-    /** @noinspection PhpDocMissingThrowsInspection */
-    /**
-     * @param $source
-     * @return Payment
-     */
-    public function item($source)
-    {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $this->mapper->map($this->sanitize($source), $this->entity());
-    }
-
-    /** @noinspection PhpDocMissingThrowsInspection */
-    /**
-     * @param array $sources
-     * @return Payment[]
-     */
-    public function items(array $sources)
-    {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $this->mapper->mapMultiple($this->sanitize($sources), $this->entity());
-    }
+    use AutoMapperPlusTrait;
 
     /**
      * @return AutoMapperConfig
      */
-    private function config(): AutoMapperConfig
+    protected function config(): AutoMapperConfig
     {
         $config = new AutoMapperConfig();
 

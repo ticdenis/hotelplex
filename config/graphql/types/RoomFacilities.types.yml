@@ -1,0 +1,20 @@
+RoomFacilities:
+  type: object
+  config:
+    fields:
+      tv:
+        type: 'Boolean!'
+      heating:
+        type: 'Boolean!'
+      airConditioning:
+        type: 'Boolean!'
+      wc:
+        type: 'Boolean!'
+      shower:
+        type: 'Boolean!'
+      wardrobe:
+        type: 'Boolean!'
+      locker:
+        type: 'Boolean!'
+      accessibility:
+        type: 'Boolean!'

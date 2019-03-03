@@ -21,7 +21,7 @@ final class RoomFacilities
     /**
      * @var RoomWc
      */
-    private $roomWc;
+    private $wc;
     /**
      * @var RoomShower
      */
@@ -43,7 +43,7 @@ final class RoomFacilities
      * @param RoomTv $tv
      * @param RoomHeating $heating
      * @param RoomAirConditioning $airConditioning
-     * @param RoomWc $roomWc
+     * @param RoomWc $wc
      * @param RoomShower $shower
      * @param RoomWardrobe $wardrobe
      * @param RoomLocker $locker
@@ -53,7 +53,7 @@ final class RoomFacilities
         RoomTv $tv,
         RoomHeating $heating,
         RoomAirConditioning $airConditioning,
-        RoomWc $roomWc,
+        RoomWc $wc,
         RoomShower $shower,
         RoomWardrobe $wardrobe,
         RoomLocker $locker,
@@ -63,7 +63,7 @@ final class RoomFacilities
         $this->tv = $tv;
         $this->heating = $heating;
         $this->airConditioning = $airConditioning;
-        $this->roomWc = $roomWc;
+        $this->wc = $wc;
         $this->shower = $shower;
         $this->wardrobe = $wardrobe;
         $this->locker = $locker;
@@ -97,9 +97,9 @@ final class RoomFacilities
     /**
      * @return RoomWc
      */
-    public function roomWc(): RoomWc
+    public function wc(): RoomWc
     {
-        return $this->roomWc;
+        return $this->wc;
     }
 
     /**

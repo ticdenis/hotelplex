@@ -1,0 +1,20 @@
+Room:
+  type: object
+  config:
+    fields:
+      uuid:
+        type: 'String!'
+      currency:
+        type: 'String!'
+      facilities:
+        type: 'RoomFacilities!'
+      individualPrice:
+        type: 'Float!'
+      individualBeds:
+        type: '[RoomBed!]!'
+      doublePrice:
+        type: 'Float!'
+      doubleBeds:
+        type: '[RoomBed!]!'
+      images:
+        type: '[String!]!'
