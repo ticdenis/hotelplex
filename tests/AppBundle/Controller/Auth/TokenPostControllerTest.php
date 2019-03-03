@@ -4,32 +4,29 @@ declare(strict_types=1);
 
 namespace App\Controller\Auth;
 
-use App\Tests\Listener\SpyExceptionListener;
-use HotelPlex\Domain\Entity\Provider\Provider;
-use HotelPlex\Domain\Entity\User\User;
+use HotelPlex\Domain\Entity\Provider\ProviderPassword;
 use HotelPlex\Domain\Entity\User\UserHotelsException;
+use HotelPlex\Domain\Entity\User\UserPassword;
 use HotelPlex\Domain\Exception\User\UserInvalidEmailException;
-use HotelPlex\Domain\Factory\Auth\TokenFactory;
 use HotelPlex\Domain\Repository\Provider\ProviderQueryRepository;
 use HotelPlex\Domain\Repository\User\UserQueryRepository;
 use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerProviderFactory;
 use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerUserFactory;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 
-final class TokenPostControllerTest extends TestCase
+final class TokenPostControllerTest extends WebTestCase
 {
     /**
-     * @var User
+     * @var Client
      */
-    private $mockUser;
+    private $client;
     /**
-     * @var Provider
+     * @var string
      */
-    private $mockProvider;
+    private $defaultPassword;
     /**
      * @var MockObject
      */
@@ -38,45 +35,38 @@ final class TokenPostControllerTest extends TestCase
      * @var MockObject
      */
     private $mockProviderRepository;
-    /**
-     * @var MockObject
-     */
-    private $mockTokenFactory;
 
-    /**
-     * @throws UserHotelsException
-     * @throws UserInvalidEmailException
-     */
     protected function setUp()
     {
-        $this->mockUser = FakerUserFactory::create();
-        $this->mockProvider = FakerProviderFactory::create();
+        $this->client = static::createClient();
+        $this->defaultPassword = 'secret';
         $this->mockUserRepository = $this->createMock(UserQueryRepository::class);
         $this->mockProviderRepository = $this->createMock(ProviderQueryRepository::class);
-        $this->mockTokenFactory = $this->createMock(TokenFactory::class);
     }
 
     /**
      * @test
+     *
+     * @throws UserHotelsException
+     * @throws UserInvalidEmailException
      */
     public function shouldReturnATokenAndCreatedHTTPCodeAsAUser()
     {
         // Arrange
-        $container = new Container();
-        $this->mockUserRepository->method('ofEmailAndPassword')->willReturn($this->mockUser);
-        $container->set('hotelplex.query-repository.user', $this->mockUserRepository);
-        $container->set('hotelplex.query-repository.provider', $this->mockProviderRepository);
-        $controller = new TokenPostController($container);
-        $request = new Request([], [
-            'email' => $this->mockUser->email()->value(),
-            'password' => $this->mockUser->password()->value()
+        $user = FakerUserFactory::create([
+            'password' => new UserPassword($this->defaultPassword)
         ]);
+        $this->mockUserRepository->method('ofEmailAndPassword')->willReturn($user);
+        $this->client->getContainer()->set('hotelplex.query-repository.user', $this->mockUserRepository);
+        $this->mockProviderRepository->method('ofEmailAndPassword')->willReturn(null);
+        $this->client->getContainer()->set('hotelplex.query-repository.provider', $this->mockProviderRepository);
         // Action
-        $response = $controller->__invoke($request);
+        $this->client->request('POST', '/auth/token', [
+            'email' => $user->email()->value(),
+            'password' => $this->defaultPassword,
+        ]);
         // Assert
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertSame(JsonResponse::HTTP_CREATED, $response->getStatusCode());
-        $this->assertJson($response->getContent());
+        $this->customAssert(JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -85,21 +75,20 @@ final class TokenPostControllerTest extends TestCase
     public function shouldReturnATokenAndCreatedHTTPCodeAsAProvider()
     {
         // Arrange
-        $container = new Container();
-        $container->set('hotelplex.query-repository.user', $this->mockUserRepository);
-        $this->mockProviderRepository->method('ofEmailAndPassword')->willReturn($this->mockProvider);
-        $container->set('hotelplex.query-repository.provider', $this->mockProviderRepository);
-        $controller = new TokenPostController($container);
-        $request = new Request([], [
-            'email' => $this->mockProvider->email()->value(),
-            'password' => $this->mockProvider->password()->value()
+        $provider = FakerProviderFactory::create([
+            'password' => new ProviderPassword($this->defaultPassword)
         ]);
+        $this->mockUserRepository->method('ofEmailAndPassword')->willReturn(null);
+        $this->client->getContainer()->set('hotelplex.query-repository.user', $this->mockUserRepository);
+        $this->mockProviderRepository->method('ofEmailAndPassword')->willReturn($provider);
+        $this->client->getContainer()->set('hotelplex.query-repository.provider', $this->mockProviderRepository);
         // Action
-        $response = $controller->__invoke($request);
+        $this->client->request('POST', '/auth/token', [
+            'email' => $provider->email()->value(),
+            'password' => $this->defaultPassword,
+        ]);
         // Assert
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertSame(JsonResponse::HTTP_CREATED, $response->getStatusCode());
-        $this->assertJson($response->getContent());
+        $this->customAssert(JsonResponse::HTTP_CREATED);
     }
 
     /**
@@ -107,22 +96,21 @@ final class TokenPostControllerTest extends TestCase
      */
     public function shouldReturnAnErrorAndUnauthorizedHTTPCode()
     {
-        // Arrange
-        $container = new Container();
-        $container->set('hotelplex.query-repository.user', $this->mockUserRepository);
-        $container->set('hotelplex.query-repository.provider', $this->mockProviderRepository);
-        $controller = new TokenPostController($container);
-        $request = new Request([], [
-            'email' => 'test@hotelplex.com',
-            'password' => 'secret'
-        ]);
         // Action
-        $response = SpyExceptionListener::execute(function () use ($controller, $request) {
-            return $controller->__invoke($request);
-        });
+        $this->client->request('POST', '/auth/token', [
+            'email' => 'token-post-controller-test@hotelplex.com',
+            'password' => 'secret',
+        ]);
         // Assert
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertSame(JsonResponse::HTTP_UNAUTHORIZED, $response->getStatusCode());
-        $this->assertJson($response->getContent());
+        $this->customAssert(JsonResponse::HTTP_UNAUTHORIZED);
+    }
+
+    /**
+     * @param int $httpStatusCode
+     */
+    private function customAssert(int $httpStatusCode): void
+    {
+        $this->assertEquals($httpStatusCode, $this->client->getResponse()->getStatusCode());
+        $this->assertJson($this->client->getResponse()->getContent());
     }
 }
