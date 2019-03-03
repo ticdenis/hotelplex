@@ -7,8 +7,21 @@ namespace HotelPlex\Tests\Infrastructure\Domain\Factory;
 use Faker\Factory;
 use Faker\Generator;
 use HotelPlex\Domain\Entity\Hotel\Hotel;
+use HotelPlex\Domain\Entity\Hotel\HotelAccessibility;
+use HotelPlex\Domain\Entity\Hotel\HotelAddress;
+use HotelPlex\Domain\Entity\Hotel\HotelEmail;
+use HotelPlex\Domain\Entity\Hotel\HotelId;
+use HotelPlex\Domain\Entity\Hotel\HotelImages;
+use HotelPlex\Domain\Entity\Hotel\HotelKitchen;
+use HotelPlex\Domain\Entity\Hotel\HotelLift;
+use HotelPlex\Domain\Entity\Hotel\HotelLogo;
+use HotelPlex\Domain\Entity\Hotel\HotelName;
+use HotelPlex\Domain\Entity\Hotel\HotelParking;
+use HotelPlex\Domain\Entity\Hotel\HotelPaymentMethods;
+use HotelPlex\Domain\Entity\Hotel\HotelPets;
+use HotelPlex\Domain\Entity\Hotel\HotelPhone;
+use HotelPlex\Domain\Entity\Hotel\HotelWifi;
 use HotelPlex\Domain\Factory\Hotel\HotelFactory;
-use HotelPlex\Domain\ValueObject\UuidValueObject;
 
 class FakerHotelFactory implements HotelFactory
 {
@@ -41,29 +54,29 @@ class FakerHotelFactory implements HotelFactory
     public function build(array $params = []): Hotel
     {
         return new Hotel(
-            $params['uuid'] ?? new UuidValueObject($this->faker->uuid),
-            $params['name'] ?? $this->faker->name,
-            $params['address'] ?? $this->faker->address,
-            $params['phone'] ?? $this->faker->phoneNumber,
-            $params['email'] ?? $this->faker->email,
-            $params['lift'] ?? $this->faker->boolean,
-            $params['wifi'] ?? $this->faker->boolean,
-            $params['accessibility'] ?? $this->faker->boolean,
-            $params['parking'] ?? $this->faker->boolean,
-            $params['kitchen'] ?? $this->faker->boolean,
-            $params['pets'] ?? $this->faker->boolean,
-            $params['paymentMethods'] ?? $this->faker->randomElement([
+            $params['uuid'] ?? new HotelId($this->faker->uuid),
+            $params['name'] ?? new HotelName($this->faker->name),
+            $params['address'] ?? new HotelAddress($this->faker->address),
+            $params['phone'] ?? new HotelPhone($this->faker->phoneNumber),
+            $params['email'] ?? new HotelEmail($this->faker->email),
+            $params['lift'] ?? new HotelLift($this->faker->boolean),
+            $params['wifi'] ?? new HotelWifi($this->faker->boolean),
+            $params['accessibility'] ?? new HotelAccessibility($this->faker->boolean),
+            $params['parking'] ?? new HotelParking($this->faker->boolean),
+            $params['kitchen'] ?? new HotelKitchen($this->faker->boolean),
+            $params['pets'] ?? new HotelPets($this->faker->boolean),
+            $params['paymentMethods'] ?? new HotelPaymentMethods($this->faker->randomElement([
                 [],
                 ['VISA']
-            ]),
-            $params['logo'] ?? $this->faker->randomElement([
+            ])),
+            $params['logo'] ?? new HotelLogo($this->faker->randomElement([
                 null,
                 $this->faker->imageUrl()
-            ]),
-            $params['images'] ?? $this->faker->randomElement([
+            ])),
+            $params['images'] ?? new HotelImages($this->faker->randomElement([
                 [],
                 [$this->faker->imageUrl(), $this->faker->imageUrl(), $this->faker->imageUrl()]
-            ])
+            ]))
         );
     }
 }

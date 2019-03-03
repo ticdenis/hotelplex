@@ -7,99 +7,81 @@ namespace HotelPlex\Domain\Entity\Hotel;
 use HotelPlex\Domain\Event\DomainEventPublisher;
 use HotelPlex\Domain\Event\Hotel\HotelRegistered;
 use HotelPlex\Domain\Event\Hotel\HotelUpdatedInfo;
-use HotelPlex\Domain\ValueObject\DateTimeValueObject;
-use HotelPlex\Domain\ValueObject\UuidValueObject;
 
 class Hotel
 {
     /**
-     * @var UuidValueObject
+     * @var HotelId
      */
     private $uuid;
     /**
-     * @var string
+     * @var HotelName
      */
     private $name;
     /**
-     * @var string
+     * @var HotelAddress
      */
     private $address;
     /**
-     * @var string
+     * @var HotelPhone
      */
     private $phone;
     /**
-     * @var string
+     * @var HotelEmail
      */
     private $email;
     /**
-     * @var bool
+     * @var HotelLift
      */
     private $lift;
     /**
-     * @var bool
+     * @var HotelWifi
      */
     private $wifi;
     /**
-     * @var bool
+     * @var HotelAccessibility
      */
     private $accessibility;
     /**
-     * @var bool
+     * @var HotelParking
      */
     private $parking;
     /**
-     * @var bool
+     * @var HotelKitchen
      */
     private $kitchen;
     /**
-     * @var bool
+     * @var HotelPets
      */
     private $pets;
     /**
-     * @var array
+     * @var HotelPaymentMethods
      */
     private $paymentMethods;
     /**
-     * @var ?string
+     * @var HotelLogo
      */
     private $logo;
     /**
-     * @var array
+     * @var HotelImages
      */
     private $images;
 
-    /**
-     * @param UuidValueObject $uuid
-     * @param string $name
-     * @param string $address
-     * @param string $phone
-     * @param string $email
-     * @param bool $lift
-     * @param bool $wifi
-     * @param bool $accessibility
-     * @param bool $parking
-     * @param bool $kitchen
-     * @param bool $pets
-     * @param array $paymentMethods
-     * @param string $logo
-     * @param array $images
-     */
     public function __construct(
-        UuidValueObject $uuid,
-        string $name,
-        string $address,
-        string $phone,
-        string $email,
-        bool $lift,
-        bool $wifi,
-        bool $accessibility,
-        bool $parking,
-        bool $kitchen,
-        bool $pets,
-        array $paymentMethods,
-        ?string $logo,
-        array $images
+        HotelId $uuid,
+        HotelName $name,
+        HotelAddress $address,
+        HotelPhone $phone,
+        HotelEmail $email,
+        HotelLift $lift,
+        HotelWifi $wifi,
+        HotelAccessibility $accessibility,
+        HotelParking $parking,
+        HotelKitchen $kitchen,
+        HotelPets $pets,
+        HotelPaymentMethods $paymentMethods,
+        HotelLogo $logo,
+        HotelImages $images
     )
     {
         $this->uuid = $uuid;
@@ -119,33 +101,33 @@ class Hotel
     }
 
     /**
-     * @param string $name
-     * @param string $address
-     * @param string $phone
-     * @param string $email
-     * @param bool $lift
-     * @param bool $wifi
-     * @param bool $accessibility
-     * @param bool $parking
-     * @param bool $kitchen
-     * @param bool $pets
+     * @param HotelName $name
+     * @param HotelAddress $address
+     * @param HotelPhone $phone
+     * @param HotelEmail $email
+     * @param HotelLift $lift
+     * @param HotelWifi $wifi
+     * @param HotelAccessibility $accessibility
+     * @param HotelParking $parking
+     * @param HotelKitchen $kitchen
+     * @param HotelPets $pets
      * @return Hotel
      */
     public static function register(
-        string $name,
-        string $address,
-        string $phone,
-        string $email,
-        bool $lift,
-        bool $wifi,
-        bool $accessibility,
-        bool $parking,
-        bool $kitchen,
-        bool $pets
+        HotelName $name,
+        HotelAddress $address,
+        HotelPhone $phone,
+        HotelEmail $email,
+        HotelLift $lift,
+        HotelWifi $wifi,
+        HotelAccessibility $accessibility,
+        HotelParking $parking,
+        HotelKitchen $kitchen,
+        HotelPets $pets
     ): Hotel
     {
         $hotel = new self(
-            new UuidValueObject(),
+            new HotelId(),
             $name,
             $address,
             $phone,
@@ -156,24 +138,24 @@ class Hotel
             $parking,
             $kitchen,
             $pets,
-            [],
-            null,
-            []
+            new HotelPaymentMethods([]),
+            new HotelLogo(null),
+            new HotelImages([])
         );
 
         DomainEventPublisher::instance()->publish(
             new HotelRegistered(
                 $hotel->uuid()->value(),
-                $hotel->name(),
-                $hotel->address(),
-                $hotel->phone(),
-                $hotel->email(),
-                $hotel->lift(),
-                $hotel->wifi(),
-                $hotel->accessibility(),
-                $hotel->parking(),
-                $hotel->kitchen(),
-                $hotel->pets()
+                $hotel->name()->value(),
+                $hotel->address()->value(),
+                $hotel->phone()->value(),
+                $hotel->email()->value(),
+                $hotel->lift()->value(),
+                $hotel->wifi()->value(),
+                $hotel->accessibility()->value(),
+                $hotel->parking()->value(),
+                $hotel->kitchen()->value(),
+                $hotel->pets()->value()
             )
         );
 
@@ -181,34 +163,34 @@ class Hotel
     }
 
     /**
-     * @param string $name
-     * @param string $address
-     * @param string $phone
-     * @param string $email
-     * @param bool $lift
-     * @param bool $wifi
-     * @param bool $accessibility
-     * @param bool $parking
-     * @param bool $kitchen
-     * @param bool $pets
-     * @param array $paymentMethods
-     * @param string|null $logo
-     * @param array $images
+     * @param HotelName $name
+     * @param HotelAddress $address
+     * @param HotelPhone $phone
+     * @param HotelEmail $email
+     * @param HotelLift $lift
+     * @param HotelWifi $wifi
+     * @param HotelAccessibility $accessibility
+     * @param HotelParking $parking
+     * @param HotelKitchen $kitchen
+     * @param HotelPets $pets
+     * @param HotelPaymentMethods $paymentMethods
+     * @param HotelLogo $logo
+     * @param HotelImages $images
      */
     public function updateInfo(
-        string $name,
-        string $address,
-        string $phone,
-        string $email,
-        bool $lift,
-        bool $wifi,
-        bool $accessibility,
-        bool $parking,
-        bool $kitchen,
-        bool $pets,
-        array $paymentMethods,
-        ?string $logo,
-        array $images
+        HotelName $name,
+        HotelAddress $address,
+        HotelPhone $phone,
+        HotelEmail $email,
+        HotelLift $lift,
+        HotelWifi $wifi,
+        HotelAccessibility $accessibility,
+        HotelParking $parking,
+        HotelKitchen $kitchen,
+        HotelPets $pets,
+        HotelPaymentMethods $paymentMethods,
+        HotelLogo $logo,
+        HotelImages $images
     )
     {
         $this->name = $name;
@@ -224,136 +206,135 @@ class Hotel
         $this->paymentMethods = $paymentMethods;
         $this->logo = $logo;
         $this->images = $images;
-        $this->updatedAt = DateTimeValueObject::now();
 
         DomainEventPublisher::instance()->publish(
             new HotelUpdatedInfo(
                 $this->uuid()->value(),
-                $this->name(),
-                $this->address(),
-                $this->phone(),
-                $this->email(),
-                $this->lift(),
-                $this->wifi(),
-                $this->accessibility(),
-                $this->parking(),
-                $this->kitchen(),
-                $this->pets(),
-                $this->paymentMethods(),
-                $this->logo(),
-                $this->images()
+                $this->name()->value(),
+                $this->address()->value(),
+                $this->phone()->value(),
+                $this->email()->value(),
+                $this->lift()->value(),
+                $this->wifi()->value(),
+                $this->accessibility()->value(),
+                $this->parking()->value(),
+                $this->kitchen()->value(),
+                $this->pets()->value(),
+                $this->paymentMethods()->value(),
+                $this->logo()->value(),
+                $this->images()->value()
             )
         );
     }
 
     /**
-     * @return UuidValueObject
+     * @return HotelId
      */
-    public function uuid(): UuidValueObject
+    public function uuid(): HotelId
     {
         return $this->uuid;
     }
 
     /**
-     * @return string
+     * @return HotelName
      */
-    public function name(): string
+    public function name(): HotelName
     {
         return $this->name;
     }
 
     /**
-     * @return string
+     * @return HotelAddress
      */
-    public function address(): string
+    public function address(): HotelAddress
     {
         return $this->address;
     }
 
     /**
-     * @return string
+     * @return HotelPhone
      */
-    public function phone(): string
+    public function phone(): HotelPhone
     {
         return $this->phone;
     }
 
     /**
-     * @return string
+     * @return HotelEmail
      */
-    public function email(): string
+    public function email(): HotelEmail
     {
         return $this->email;
     }
 
     /**
-     * @return bool
+     * @return HotelLift
      */
-    public function lift(): bool
+    public function lift(): HotelLift
     {
         return $this->lift;
     }
 
     /**
-     * @return bool
+     * @return HotelWifi
      */
-    public function wifi(): bool
+    public function wifi(): HotelWifi
     {
         return $this->wifi;
     }
 
     /**
-     * @return bool
+     * @return HotelAccessibility
      */
-    public function accessibility(): bool
+    public function accessibility(): HotelAccessibility
     {
         return $this->accessibility;
     }
 
     /**
-     * @return bool
+     * @return HotelParking
      */
-    public function parking(): bool
+    public function parking(): HotelParking
     {
         return $this->parking;
     }
 
     /**
-     * @return bool
+     * @return HotelKitchen
      */
-    public function kitchen(): bool
+    public function kitchen(): HotelKitchen
     {
         return $this->kitchen;
     }
 
     /**
-     * @return bool
+     * @return HotelPets
      */
-    public function pets(): bool
+    public function pets(): HotelPets
     {
         return $this->pets;
     }
 
     /**
-     * @return array
+     * @return HotelPaymentMethods
      */
-    public function paymentMethods(): array
+    public function paymentMethods(): HotelPaymentMethods
     {
         return $this->paymentMethods;
     }
 
     /**
-     * @return string|null
+     * @return HotelLogo
      */
-    public function logo(): ?string
+    public function logo(): HotelLogo
     {
         return $this->logo;
     }
 
     /**
-     * @return array
+     * @return HotelImages
      */
-    public function images(): array
+    public function images(): HotelImages
     {
         return $this->images;
     }

@@ -15,19 +15,19 @@ class ArrayHotelPresenter extends HotelPresenter
     {
         return [
             'uuid' => $this->hotel->uuid()->value(),
-            'name' => $this->hotel->name(),
-            'address' => $this->hotel->address(),
-            'phone' => $this->hotel->phone(),
-            'email' => $this->hotel->email(),
-            'lift' => $this->hotel->lift(),
-            'wifi' => $this->hotel->wifi(),
-            'accessibility' => $this->hotel->accessibility(),
-            'parking' => $this->hotel->parking(),
-            'kitchen' => $this->hotel->kitchen(),
-            'pets' => $this->hotel->pets(),
-            'paymentMethods' => $this->hotel->paymentMethods(),
-            'logo' => $this->hotel->logo(),
-            'images' => $this->hotel->images()
+            'name' => $this->hotel->name()->value(),
+            'address' => $this->hotel->address()->value(),
+            'phone' => $this->hotel->phone()->value(),
+            'email' => $this->hotel->email()->value(),
+            'lift' => $this->hotel->lift()->value(),
+            'wifi' => $this->hotel->wifi()->value(),
+            'accessibility' => $this->hotel->accessibility()->value(),
+            'parking' => $this->hotel->parking()->value(),
+            'kitchen' => $this->hotel->kitchen()->value(),
+            'pets' => $this->hotel->pets()->value(),
+            'paymentMethods' => $this->hotel->paymentMethods()->value(),
+            'logo' => $this->hotel->logo()->value(),
+            'images' => $this->hotel->images()->value()
         ];
     }
 }
