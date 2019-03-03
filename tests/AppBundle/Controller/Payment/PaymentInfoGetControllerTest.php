@@ -4,49 +4,61 @@ declare(strict_types=1);
 
 namespace App\Controller\Payment;
 
-use HotelPlex\Domain\Entity\Payment\Payment;
+use HotelPlex\Domain\Entity\Payment\PaymentId;
 use HotelPlex\Domain\Repository\Payment\PaymentQueryRepository;
 use HotelPlex\Tests\Infrastructure\Domain\Factory\FakerPaymentFactory;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 
-final class PaymentInfoGetControllerTest extends TestCase
+final class PaymentInfoGetControllerTest extends WebTestCase
 {
     /**
-     * @var MockObject
+     * @var Client
      */
-    private $mockPaymentRepository;
-
-    /**
-     * @var Payment
-     */
-    private $mockPayment;
+    private $client;
 
     protected function setUp()
     {
-        $this->mockPaymentRepository = $this->createMock(PaymentQueryRepository::class);
-        $this->mockPayment = FakerPaymentFactory::create();
+        $this->client = static::createClient();
     }
 
     /**
      * @test
      */
-        public function shouldReturnAPaymenInfoGivenAnUuidAndOKHTTPCode()
+    public function shouldReturnAPaymentInfoGivenAnUuidAndOKHTTPCode()
     {
         // Arrange
-        $container = new Container();
-        $container->set('hotelplex.query-repository.payment', $this->mockPaymentRepository);
-        $this->mockPaymentRepository->method('ofId')->willReturn($this->mockPayment);
-        $controller = new PaymentInfoGetController($container);
-        $request = new Request(['uuid' => $this->mockPayment->uuid()->value()]);
+        $payments = [FakerPaymentFactory::create()];
+        $mockRepository = $this->createMock(PaymentQueryRepository::class);
+        $mockRepository->method('all')->willReturn($payments);
+        $mockRepository->method('ofId')->willReturn($payments[0]);
+        $this->client->getContainer()->set('hotelplex.query-repository.payment', $mockRepository);
         // Action
-        $response = $controller->__invoke($request);
+        $this->client->request('GET', sprintf('/payments/%s', $payments[0]->uuid()->value()));
         // Assert
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertSame(JsonResponse::HTTP_OK, $response->getStatusCode());
-        $this->assertJson($response->getContent());
+        $this->customAssert(JsonResponse::HTTP_OK);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotReturnAPaymentInfoGivenAnUuidThatNotExistsAndNotFoundHTTPCode()
+    {
+        // Arrange
+        $paymentId = new PaymentId();
+        // Action
+        $this->client->request('GET', sprintf('/payments/%s', $paymentId->value()));
+        // Assert
+        $this->customAssert(JsonResponse::HTTP_NOT_FOUND);
+    }
+
+    /**
+     * @param int $httpStatusCode
+     */
+    private function customAssert(int $httpStatusCode): void
+    {
+        $this->assertEquals($httpStatusCode, $this->client->getResponse()->getStatusCode());
+        $this->assertJson($this->client->getResponse()->getContent());
     }
 }
