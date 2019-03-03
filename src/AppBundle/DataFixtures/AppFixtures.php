@@ -27,5 +27,10 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         (new HotelFixture())->load($this->connection);
+        (new UserFixture())->load($this->connection);
+        (new ProviderFixture())->load($this->connection);
+        (new CurrencyFixture())->load($this->connection);
+        (new PaymentFixture())->load($this->connection);
+        (new RoomFixture())->load($this->connection);
     }
 }

@@ -13,22 +13,18 @@ final class User
      * @var UserId
      */
     private $uuid;
-
     /**
      * @var UserUsername
      */
     private $username;
-
     /**
      * @var UserEmail
      */
     private $email;
-
     /**
      * @var UserPassword
      */
     private $password;
-
     /**
      * @var UserHotels
      */
